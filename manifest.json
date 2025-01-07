@@ -1,0 +1,10 @@
+{
+  "name": "Svfear's Cybersecurity Blog",
+  "icons": [
+    {
+      "src": "cyber-security.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
