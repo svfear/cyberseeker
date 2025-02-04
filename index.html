@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="https://github.com/svfear/cyberseeker/blob/main/cyber-security.png?raw=true" type="image/x-icon">
-
     <title>Svfear's Cybersecurity Blog</title>
     <style>
         body {
@@ -15,8 +14,9 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            text-align: center;
         }
-        header {
+        header, footer {
             background-color: #1a1a1a;
             padding: 20px;
             text-align: center;
@@ -42,103 +42,46 @@
         main {
             padding: 20px;
             max-width: 900px;
-            margin: 0 auto;
+            margin: auto;
         }
-        article {
+        article, .video-section {
             margin-bottom: 20px;
             padding: 20px;
             background-color: #121212;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-        article h2 {
+        article h2, section h2 {
             color: #00ff00;
             text-shadow: 0 0 5px #00ff00;
         }
-        nav a {
+        nav a, a {
             color: #00ff00;
             margin: 0 10px;
             text-decoration: none;
             font-weight: bold;
         }
-        nav a:hover {
+        nav a:hover, a:hover {
             text-shadow: 0 0 5px #00ff00;
         }
-        section h2 {
-            color: #00ff00;
-            text-shadow: 0 0 5px #00ff00;
-        }
-        footer {
-            background-color: #1a1a1a;
-            padding: 20px;
-            text-align: center;
-            margin-top: 40px;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+        .video-section iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            border-radius: 10px;
         }
         footer p {
-            margin: 10px 0;
             color: #ffffff;
-        }
-        footer a {
-            margin: 0 10px;
-            display: inline-block;
         }
         footer img {
             width: 30px;
             height: 30px;
+            margin: 0 10px;
             transition: transform 0.2s ease;
         }
         footer img:hover {
             transform: scale(1.2);
             filter: drop-shadow(0 0 5px #00ff00);
-        }
-        a {
-            color: #00ff00;
-            text-decoration: none;
-        }
-        a:hover {
-            text-shadow: 0 0 5px #00ff00;
-        }
-        .highlight {
-            background-color: #2a2a2a;
-            padding: 10px;
-            border-left: 5px solid #ff9900; /* Orange border to make it stand out */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-        }
-        .highlight strong {
-            color: #ff9900; /* Orange text for the title */
-        }
-        .highlight ul li {
-            color: #ffffff; /* White text for the list items */
-        }
-    </style>
-     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cybersecurity Blog</title>
-    <style>
-        body {
-            background-color: #0a0f0d;
-            color: #d4d4d4;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-        .video-section {
-            margin-top: 50px;
-            padding: 20px;
-            background-color: #16221f;
-            border-radius: 10px;
-        }
-        iframe {
-            width: 100%;
-            height: 400px;
-            border: none;
-            border-radius: 10px;
         }
     </style>
 </head>
@@ -147,10 +90,10 @@
         <img src="1715028775217.jpg" alt="Profile Picture">
         <h1>Svfear's Cybersecurity Blog</h1>
     </header>
+    
     <div class="container">
         <h1>Welcome to My Cybersecurity Blog</h1>
         <p>Exploring the world of penetration testing, bug hunting, and security research.</p>
-
         <div class="video-section">
             <h2>Latest YouTube Video</h2>
             <iframe src="https://www.youtube.com/embed/xQjkDSz_1go" allowfullscreen></iframe>
@@ -167,51 +110,6 @@
             </nav>
             <p>Hi, I'm Svfear! This is my blog where I share insights and tips on cybersecurity. Stay tuned for more updates!</p>
         </article>
-
-        <section>
-            <h2>Recent Posts</h2>
-            <ul>
-                <li><a href="post2.html">WHOAMI AND WHY THIS BLOG!</a></li>
-                <li><a href="post1.html">THE PERFECT WAY TO START LEARNING CYBERSECURITY!!</a></li>
-            </ul>
-        </section>
-
-        <section id="achievements">
-            <h2>Achievements</h2>
-            <p>Over the years, I have worked relentlessly to build my skills and make meaningful contributions to the field of cybersecurity. Below are some of my key accomplishments:</p>
-            <ul>
-                <li><strong>Penetration Testing Experience:</strong> With over three years of hands-on experience in penetration testing, I have sharpened my technical skills through practical exposure to various real-world environments. My expertise ranges from web, network, and system penetration testing to security assessments, vulnerability analysis, and risk mitigation strategies.</li>
-                <li><strong>Bug Hunting Contributions:</strong> As an active bug hunter with platforms like <strong>HackerOne</strong> and <strong>Integriti</strong>, I have identified and reported several critical vulnerabilities, contributing to the security of numerous platforms and applications.</li>
-                
-                <li class="highlight">
-                    <strong>Mastercard Cybersecurity Virtual Experience Program on Forage - January 2025</strong>
-                    <ul>
-                        <li>Completed a job simulation where I served as an analyst on Mastercard’s Security Awareness Team.</li>
-                        <li>Helped identify and report security threats such as phishing.</li>
-                        <li>Analyzed and identified which areas of the business needed more robust security training and implemented training courses and procedures for those teams.</li>
-                    </ul>
-                </li>
-
-                <h2>Tata Cybersecurity Security Analyst Job Simulation on Forage - January 2025</h2>
-                <ul>
-                    <li>Completed a job simulation involving identity and access management (IAM) for Tata Consultancy Services, collaborating with a Cybersecurity Consulting team.</li>
-                    <li>Acquired expertise in IAM principles, cybersecurity best practices, and strategic alignment with business objectives.</li>
-                    <li>Delivered comprehensive documentation and presentations, showcasing the ability to communicate complex technical concepts effectively.</li>
-                </ul>
-
-                <li><strong>Certifications:</strong>
-                    <ul>
-                        <li><strong>eCPPT:</strong> Completed the eLearnSecurity Certified Professional Penetration Tester (eCPPT) certification, validating my skills in penetration testing techniques.</li>
-                        <li><strong>OSCP:</strong> Preparing for the Offensive Security Certified Professional (OSCP) certification to further solidify my position as a penetration tester.</li>
-                        <li><strong>CRTP:</strong> I am also set to achieve the Certified Red Team Professional (CRTP) certification to deepen my knowledge of red teaming techniques.</li>
-                    </ul>
-                </li>
-
-                <li><strong>Content Creation:</strong> As part of my mission to share knowledge, I have created valuable educational resources, including cybersecurity blogs and video tutorials, to help others learn and grow in this exciting field.</li>
-                <li><strong>Cybersecurity Community Engagement:</strong> I am an active member of the cybersecurity community, contributing to forums, discussions, and knowledge-sharing platforms. I also collaborate with fellow enthusiasts and professionals to stay up-to-date with the latest developments in cybersecurity.</li>
-                <li><strong>Successful Bug Bounties:</strong> I have successfully participated in multiple bug bounty programs, identifying high-priority vulnerabilities and contributing to platform security through responsible disclosure.</li>
-            </ul>
-        </section>
     </main>
 
     <footer>
