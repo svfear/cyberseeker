@@ -2,25 +2,31 @@ body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #0d1117;
-  color: #c9d1d9;
+  background-color: #000;
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff;
 }
 
 header {
-  background-color: #161b22;
+  background-color: #111;
   padding: 2rem;
   text-align: center;
+  border-bottom: 2px solid #0ff;
+  box-shadow: 0 0 20px #0ff;
 }
 
 header h1 {
   margin: 0;
-  font-size: 2.5rem;
-  color: #58a6ff;
+  font-size: 3rem;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
 }
 
 header p {
   margin: 0.5rem 0;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  color: #fff;
+  text-shadow: 0 0 5px #f0f;
 }
 
 nav {
@@ -28,33 +34,54 @@ nav {
 }
 
 nav a {
-  color: #58a6ff;
+  color: #0ff;
   text-decoration: none;
   margin: 0 1rem;
+  font-weight: bold;
+  text-shadow: 0 0 6px #0ff;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: #f0f;
+  text-shadow: 0 0 8px #f0f;
 }
 
 section {
   padding: 2rem;
   max-width: 800px;
   margin: auto;
+  border-bottom: 1px solid #0ff;
 }
 
 h2 {
-  color: #58a6ff;
+  color: #f0f;
+  font-size: 2rem;
+  text-shadow: 0 0 10px #f0f;
+}
+
+ul {
+  list-style-type: square;
+  padding-left: 20px;
 }
 
 a {
-  color: #8b949e;
-  transition: color 0.2s ease;
+  color: #0ff;
+  text-decoration: underline;
+  transition: all 0.2s ease;
 }
 
 a:hover {
-  color: #58a6ff;
+  color: #f0f;
+  text-shadow: 0 0 10px #f0f;
 }
 
 footer {
   text-align: center;
   padding: 1rem;
-  background-color: #161b22;
-  color: #8b949e;
+  background-color: #111;
+  color: #0ff;
+  border-top: 2px solid #0ff;
+  box-shadow: 0 0 10px #0ff;
+  text-shadow: 0 0 5px #0ff;
 }
