@@ -4,9 +4,72 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ahmed Mahmoud | Penetration Tester</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0d0d0d;
+      color: #00ffcc;
+      line-height: 1.6;
+    }
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-bottom: 2px solid #00ffcc;
+    }
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 3px solid #00ffcc;
+      box-shadow: 0 0 15px #00ffcc;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #ffffff;
+    }
+    nav {
+      margin-top: 1rem;
+    }
+    nav a {
+      color: #00ffcc;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section {
+      padding: 2rem 10%;
+      border-bottom: 1px solid #00ffcc33;
+    }
+    h2 {
+      border-bottom: 2px solid #00ffcc;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 1px solid #00ffcc33;
+      font-size: 0.9rem;
+    }
+    a {
+      color: #00ffcc;
+    }
+    ul {
+      list-style-type: square;
+      margin-left: 1.5rem;
+    }
+    .sub-heading {
+      color: #00ffff;
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+    }
+  </style>
 </head>
 <body>
+
   <header>
     <img src="1715028775217.jpg" alt="Ahmed Mahmoud" class="profile-img" />
     <h1>Ahmed Mahmoud</h1>
@@ -14,8 +77,8 @@
     <nav>
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -29,36 +92,27 @@
 
   <section id="experience">
     <h2>Professional Experience</h2>
-    <h3>Bug Bounty Hunter - HackerOne & Integriti (����� - Present)</h3>
+    <p class="sub-heading">Bug Bounty Hunter – HackerOne & Integriti (����� - Present)</p>
     <ul>
-      <li>Conducted in-depth vulnerability assessments and penetration tests across multiple platforms and applications.</li>
-      <li>Identified critical issues such as SQL Injection (SQLi), Cross-Site Scripting (XSS), and Remote Code Execution (RCE).</li>
-      <li>Submitted high-impact bug reports that led to remediation of security flaws and earned monetary rewards.</li>
-      <li>Collaborated with security teams to document discovery and exploitation processes.</li>
-      <li>Developed custom scripts and tools to automate vulnerability scanning and reconnaissance.</li>
+      <li>Conducted in-depth vulnerability assessments and penetration tests across multiple platforms.</li>
+      <li>Discovered critical issues including SQLi, XSS, and RCE.</li>
+      <li>Submitted impactful reports that resulted in security fixes and received rewards.</li>
+      <li>Collaborated with security teams and created documentation.</li>
+      <li>Developed custom scripts for automation and efficiency.</li>
     </ul>
 
-    <h3>Mastercard Cybersecurity Virtual Experience - January 2025</h3>
+    <p class="sub-heading">Mastercard Cybersecurity Virtual Experience – Forage (Jan 2025)</p>
     <ul>
       <li>Served as an analyst on Mastercard’s Security Awareness Team.</li>
-      <li>Helped identify and report phishing threats.</li>
-      <li>Analyzed business units needing stronger security training and implemented tailored training procedures.</li>
+      <li>Identified and reported phishing threats.</li>
+      <li>Designed and implemented security training initiatives.</li>
     </ul>
 
-    <h3>Tata Cybersecurity Security Analyst Simulation - January 2025</h3>
+    <p class="sub-heading">Tata Cybersecurity Analyst Simulation – Forage (Jan 2025)</p>
     <ul>
-      <li>Worked on identity and access management (IAM) for Tata Consultancy Services.</li>
-      <li>Collaborated with the cybersecurity consulting team to apply best practices and align with business goals.</li>
-      <li>Delivered documentation and presentations communicating technical concepts effectively.</li>
-    </ul>
-  </section>
-
-  <section id="projects">
-    <h2>Projects & Contributions</h2>
-    <ul>
-      <li>HTB & TryHackMe Machines</li>
-      <li>Bug Bounty Writeups (HackerOne / Integrity)</li>
-      <li>Cybersecurity Content on <a href="https://www.youtube.com/channel/UCneGFy2ODUmIcFLAkuXuOCA" target="_blank">YouTube</a></li>
+      <li>Worked on IAM (Identity and Access Management) strategies.</li>
+      <li>Aligned cybersecurity practices with business goals.</li>
+      <li>Delivered professional documentation and presentations.</li>
     </ul>
   </section>
 
@@ -73,7 +127,6 @@
       <li><strong>Programming & Scripting:</strong> Python, Bash, PowerShell</li>
       <li><strong>Operating Systems:</strong> Windows, Linux (Ubuntu, Kali)</li>
     </ul>
-
     <h3>Languages</h3>
     <ul>
       <li><strong>English:</strong> Fluent</li>
@@ -81,9 +134,28 @@
     </ul>
   </section>
 
+  <section id="projects">
+    <h2>Projects & Contributions</h2>
+
+    <p class="sub-heading">Network Penetration Testing Lab (Personal Project)</p>
+    <p>Simulated a full penetration test on a virtual network. Used Nmap, Metasploit, and manual testing techniques to identify, exploit, and report vulnerabilities.</p>
+
+    <p class="sub-heading">Web Application Security (CTF Challenges)</p>
+    <p>Participated in many CTFs (TryHackMe & Hack The Box), solving real-world web app and network challenges to enhance technical skills.</p>
+
+    <p class="sub-heading">Hack The Box (HTB) – Jan 2025</p>
+    <p>Gained hands-on experience solving active machines focused on advanced exploitation, privilege escalation, and post-exploitation. Ranked Hacker on the platform.</p>
+
+    <ul>
+      <li><a href="https://tryhackme.com" target="_blank">TryHackMe Profile</a></li>
+      <li><a href="https://app.hackthebox.com/profile" target="_blank">Hack The Box Profile</a></li>
+      <li><a href="https://www.youtube.com/channel/UCneGFy2ODUmIcFLAkuXuOCA" target="_blank">YouTube Cybersecurity Channel</a></li>
+    </ul>
+  </section>
+
   <section id="contact">
     <h2>Contact Me</h2>
-    <p>Feel free to reach out through the platforms below:</p>
+    <p>Feel free to connect via the platforms below:</p>
     <ul>
       <li><a href="https://github.com/svfear" target="_blank">GitHub</a></li>
       <li><a href="https://www.linkedin.com/in/ahmed-mahmoud-4036742bb/" target="_blank">LinkedIn</a></li>
@@ -94,5 +166,6 @@
   <footer>
     <p>© 2025 Ahmed Mahmoud. All rights reserved.</p>
   </footer>
+
 </body>
 </html>
