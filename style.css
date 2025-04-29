@@ -85,3 +85,12 @@ footer {
   box-shadow: 0 0 10px #0ff;
   text-shadow: 0 0 5px #0ff;
 }
+.profile-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #0ff;
+  box-shadow: 0 0 20px #0ff;
+  margin-bottom: 1rem;
+}
