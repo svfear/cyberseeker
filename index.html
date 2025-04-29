@@ -4,67 +4,111 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ahmed Mahmoud | Penetration Tester</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
-      background-color: #0d0d0d;
-      color: #00ffcc;
+      background-color: #0b0c10;
+      color: #00fff7;
       line-height: 1.6;
     }
+
     header {
       text-align: center;
       padding: 2rem 1rem;
-      border-bottom: 2px solid #00ffcc;
+      border-bottom: 2px solid #00ffc8;
+      background: linear-gradient(180deg, #0b0c10, #14161a);
+      box-shadow: 0 0 30px #00fff7aa;
     }
+
     .profile-img {
-      width: 150px;
-      height: 150px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
-      border: 3px solid #00ffcc;
-      box-shadow: 0 0 15px #00ffcc;
+      border: 4px solid #00ffc8;
+      box-shadow: 0 0 25px #00fff7, 0 0 40px #00fff7aa;
       margin-bottom: 1rem;
     }
+
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       color: #ffffff;
+      text-shadow: 0 0 8px #00fff7;
     }
+
     nav {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
     }
+
     nav a {
-      color: #00ffcc;
-      margin: 0 15px;
+      color: #00ffc8;
+      margin: 0 20px;
       text-decoration: none;
       font-weight: bold;
+      font-size: 1rem;
+      transition: 0.3s;
     }
+
+    nav a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 10px #00ffc8;
+    }
+
     section {
       padding: 2rem 10%;
-      border-bottom: 1px solid #00ffcc33;
+      border-bottom: 1px solid #00ffc833;
     }
+
     h2 {
-      border-bottom: 2px solid #00ffcc;
+      border-bottom: 2px solid #00ffc8;
       padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
+      font-size: 2rem;
+      color: #ffffff;
+      text-shadow: 0 0 10px #00ffc8;
     }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      border-top: 1px solid #00ffcc33;
-      font-size: 0.9rem;
+
+    h3, .sub-heading {
+      color: #00ffff;
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      text-shadow: 0 0 5px #00fff7;
     }
-    a {
-      color: #00ffcc;
-    }
+
     ul {
       list-style-type: square;
       margin-left: 1.5rem;
     }
-    .sub-heading {
-      color: #00ffff;
-      margin-top: 1.5rem;
-      font-size: 1.2rem;
+
+    ul li {
+      margin: 0.5rem 0;
+    }
+
+    a {
+      color: #00fff7;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      text-shadow: 0 0 8px #00ffc8;
+      color: #ffffff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #0d0f13;
+      border-top: 1px solid #00ffc833;
+      font-size: 0.9rem;
+      color: #ffffff;
+      text-shadow: 0 0 5px #00ffc8;
+    }
+
+    @media screen and (max-width: 768px) {
+      section {
+        padding: 2rem 5%;
+      }
     }
   </style>
 </head>
@@ -92,7 +136,8 @@
 
   <section id="experience">
     <h2>Professional Experience</h2>
-    <p class="sub-heading">Bug Bounty Hunter – HackerOne & Integriti (����� - Present)</p>
+
+    <p class="sub-heading">Bug Bounty Hunter – HackerOne & Integriti</p>
     <ul>
       <li>Conducted in-depth vulnerability assessments and penetration tests across multiple platforms.</li>
       <li>Discovered critical issues including SQLi, XSS, and RCE.</li>
