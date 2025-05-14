@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Ahmed Mahmoud – Penetration Tester, Bug Hunter, and CTF Enthusiast. Explore my projects, professional background, and cybersecurity insights.">
-
-  <title>Ahmed Mahmoud | Penetration Tester | GRC </title>
+  <title>Ahmed Mahmoud | Penetration Tester | GRC</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -13,20 +12,21 @@
       font-family: 'Orbitron', sans-serif;
       background-color: #0b0c10;
       color: #00fff7;
-      line-height: 1.6;
+      line-height: 1.8;
+      letter-spacing: 0.5px;
     }
 
     header {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 3rem 1rem;
       border-bottom: 2px solid #00ffc8;
       background: linear-gradient(180deg, #0b0c10, #14161a);
       box-shadow: 0 0 30px #00fff7aa;
     }
 
     .profile-img {
-      width: 160px;
-      height: 160px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       border: 4px solid #00ffc8;
       box-shadow: 0 0 25px #00fff7, 0 0 40px #00fff7aa;
@@ -34,22 +34,30 @@
     }
 
     h1 {
-      font-size: 2.8rem;
+      font-size: 3rem;
       color: #ffffff;
       text-shadow: 0 0 8px #00fff7;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
     }
 
     nav {
-      margin-top: 1.5rem;
+      margin-top: 1rem;
     }
 
     nav a {
       color: #00ffc8;
-      margin: 0 20px;
+      margin: 0 25px;
       text-decoration: none;
       font-weight: bold;
-      font-size: 1rem;
-      transition: 0.3s;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: 0.3s ease;
     }
 
     nav a:hover {
@@ -58,15 +66,20 @@
     }
 
     section {
-      padding: 2rem 10%;
+      padding: 3rem 10%;
       border-bottom: 1px solid #00ffc833;
+      transition: background 0.3s ease;
+    }
+
+    section:hover {
+      background-color: #1a1d22;
     }
 
     h2 {
       border-bottom: 2px solid #00ffc8;
       padding-bottom: 0.5rem;
       margin-bottom: 1.2rem;
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: #ffffff;
       text-shadow: 0 0 10px #00ffc8;
     }
@@ -74,13 +87,14 @@
     h3, .sub-heading {
       color: #00ffff;
       margin-top: 1.5rem;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       text-shadow: 0 0 5px #00fff7;
     }
 
     ul {
       list-style-type: square;
-      margin-left: 1.5rem;
+      margin-left: 2rem;
+      padding-left: 1rem;
     }
 
     ul li {
@@ -89,7 +103,7 @@
 
     a {
       color: #00fff7;
-      transition: 0.3s;
+      transition: 0.3s ease;
     }
 
     a:hover {
@@ -99,17 +113,81 @@
 
     footer {
       text-align: center;
-      padding: 1rem;
+      padding: 1.5rem;
       background: #0d0f13;
       border-top: 1px solid #00ffc833;
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: #ffffff;
       text-shadow: 0 0 5px #00ffc8;
+    }
+
+    footer a {
+      color: #00fff7;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-shadow: 0 0 8px #00ffc8;
+      color: #ffffff;
+    }
+
+    .project {
+      background: #14161a;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 20px #00fff7;
+      margin-bottom: 2rem;
+    }
+
+    .project h3 {
+      color: #00ffc8;
+      font-size: 2rem;
+    }
+
+    .difficulty-section {
+      margin-top: 2rem;
+    }
+
+    .difficulty-section h3 {
+      color: #00ffc8;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .difficulty-section ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .difficulty-section li {
+      margin: 1rem 0;
+      font-size: 1.1rem;
     }
 
     @media screen and (max-width: 768px) {
       section {
         padding: 2rem 5%;
+      }
+
+      nav a {
+        font-size: 1rem;
+        margin: 0 15px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .profile-img {
+        width: 140px;
+        height: 140px;
+      }
+
+      .project {
+        padding: 1rem;
       }
     }
   </style>
@@ -142,11 +220,11 @@
     <h2>Professional Experience</h2>
     <p class="sub-heading">Governance, Risk & Compliance (GRC) Intern – Vosyn (May 2025 – Present)</p>
     <ul>
-    <li>Assisted in conducting risk assessments and identifying security gaps in alignment with frameworks like ISO27001 and NIST.</li>
-    <li>Contributed to drafting policies and compliance documentation to support regulatory audits.</li>
-    <li>Collaborated with IT and security teams to track risk mitigation efforts and enforce security controls.</li>
-    <li>Participated in third-party risk management by evaluating vendor compliance.</li>
-    <li>Helped maintain incident response procedures, security awareness content, and internal training resources.</li>
+      <li>Assisted in conducting risk assessments and identifying security gaps in alignment with frameworks like ISO27001 and NIST.</li>
+      <li>Contributed to drafting policies and compliance documentation to support regulatory audits.</li>
+      <li>Collaborated with IT and security teams to track risk mitigation efforts and enforce security controls.</li>
+      <li>Participated in third-party risk management by evaluating vendor compliance.</li>
+      <li>Helped maintain incident response procedures, security awareness content, and internal training resources.</li>
     </ul>
     <p class="sub-heading">Bug Bounty Hunter – HackerOne & Integriti</p>
     <ul>
@@ -157,39 +235,6 @@
       <li>Developed and implemented custom scripts for enhanced testing and reporting efficiency.</li>
     </ul>
   </section>
-
-  <section id="completed-machines">
-  <h2>Completed Machines on Hack The Box</h2>
-  <p>Below are some of the machines I have successfully completed on Hack The Box, categorized by difficulty:</p>
-
-  <div class="difficulty-section">
-    <h3>Easy</h3>
-    <ul>
-      <li><strong>Code</strong> – Rating: 3.9 | Users: 6,191 | Rooted: 5,557</li>
-      <li><strong>Dog</strong> – Rating: 3.7 | Users: 6,883 | Rooted: 6,710</li>
-      <li><strong>Titanic</strong> – Rating: 4.2 | Users: 12,640 | Rooted: 9,772</li>
-      <li><strong>EscapeTwo</strong> – Rating: 4.4 | Users: 9,469 | Rooted: 7,087</li>
-      <li><strong>UnderPass</strong> – Rating: 3.8 | Users: 12,816 | Rooted: 12,419</li>
-    </ul>
-  </div>
-
-  <div class="difficulty-section">
-    <h3>Medium</h3>
-    <ul>
-      <li><strong>Cypher</strong> – Rating: 4.2 | Users: 3,690 | Rooted: 3,584</li>
-      <li><strong>Cat</strong> – Rating: 3.5 | Users: 4,013 | Rooted: 3,615</li>
-      <li><strong>Heal</strong> – Rating: N/A | Users: N/A | Rooted: N/A</li>
-    </ul>
-  </div>
-
-  <div class="difficulty-section">
-    <h3>Hard</h3>
-    <ul>
-      <li><strong>Eureka</strong> – Rating: N/A | Users: N/A | Rooted: N/A</li>
-    </ul>
-  </div>
-</section>
-
 
   <section id="skills">
     <h2>Skills & Expertise</h2>
@@ -202,90 +247,35 @@
       <li><strong>Programming & Scripting:</strong> Python, Bash, PowerShell</li>
       <li><strong>Operating Systems:</strong> Windows, Linux (Ubuntu, Kali)</li>
     </ul>
-    <h3>Languages</h3>
+    <h3>Certifications</h3>
     <ul>
-      <li><strong>English:</strong> Fluent</li>
-      <li><strong>Arabic:</strong> Native</li>
+      <li>OSCP – Offensive Security Certified Professional</li>
+      <li>eCPPT – eLearnSecurity Certified Professional Penetration Tester</li>
+      <li>SEC560 – Network Penetration Testing and Ethical Hacking</li>
     </ul>
   </section>
 
-  <section id="courses">
-    <h2>Certifications & Courses</h2>
-    <ul>
-      <li><strong>OSCP</strong> – Offensive Security Certified Professional</li>
-      <li><strong>PNPT</strong> – Practical Network Penetration Tester</li>
-      <li><strong>Offensive Security Operations</strong> – Cybrary</li>
-    </ul>
-  </section>
   <section id="projects">
-  <h2>🛠️ Projects</h2>
-
-  <div class="project">
-    <h3>📌 WordPress Security Risk Assessment – Vosyn Inc. (May 2025)</h3>
-    <ul>
-      <li>Led the design and deployment of a 35+ question Google Form to assess WordPress security.</li>
-      <li>Collaborated with the software team to evaluate update cycles, plugin sources, and user authentication.</li>
-      <li>Audited backup strategies, permission settings, and malware protection practices.</li>
-      <li>Recommended improvements based on OWASP & CIS benchmarks.</li>
-      <li><strong>Tools:</strong> Google Forms, WordPress CMS, OWASP Checklist</li>
-    </ul>
-  </div>
-
-  <div class="project">
-    <h3>🔐 Hack The Box – Penetration Testing Challenges (Jan 2025 – Ongoing)</h3>
-    <ul>
-      <li>Actively engaged in solving HTB machines to sharpen real-world pentesting skills.</li>
-      <li>Focused on privilege escalation, post-exploitation, and enumeration techniques.</li>
-      <li>Earned Ranked Hacker status by solving multiple medium-to-hard difficulty machines.</li>
-    </ul>
-  </div>
-
-  <div class="project">
-    <h3>🛡️ Mastercard Cybersecurity Simulation – Forage (Jan 2025)</h3>
-    <ul>
-      <li>Analyzed phishing attempts and suggested security awareness improvements for various departments.</li>
-      <li>Proposed targeted training initiatives for vulnerable teams.</li>
-    </ul>
-  </div>
-
-  <div class="project">
-    <h3>🧩 Tata Cybersecurity Simulation – Forage (Jan 2025)</h3>
-    <ul>
-      <li>Worked on an IAM (Identity and Access Management) simulation project.</li>
-      <li>Contributed to a strategy document aligning cybersecurity with business needs.</li>
-    </ul>
-  </div>
-
-  <ul>
-    <li><a href="https://app.hackthebox.com/profile/168485" target="_blank">Hack The Box Profile</a></li>
-    <li><a href="https://www.youtube.com/channel/UCneGFy2ODUmIcFLAkuXuOCA" target="_blank">YouTube Cybersecurity Channel</a></li>
-  </ul>
-</section>
-
-<section id="writeups">
-  <h2>📝 Write-ups</h2>
-  <ul>
-    <li><a href="https://sticky-mapusaurus-e36.notion.site/Vintage-Walkthrough-1e156c61c02f8093a3a2f0ef11844559" target="_blank">Vintage Walkthrough by zemrx <3</a></li>
-  </ul>
-</section>
-
-  
-
-   
-
-
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Feel free to connect with me on the following platforms:</p>
-    <ul>
-      <li><a href="https://github.com/svfear" target="_blank">GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/ahmed-mahmoud-4036742bb/">LinkedIn</a></li>
-    </ul>
+    <h2>Featured Projects</h2>
+    <div class="project">
+      <h3>Penetration Testing of Web Applications</h3>
+      <p>I have conducted various tests targeting web applications, focusing on vulnerabilities like XSS, SQL injection, and CSRF. These projects helped me refine my skills in automated and manual penetration testing methodologies.</p>
+      <div class="difficulty-section">
+        <h3>Difficulty Level:</h3>
+        <ul>
+          <li>Intermediate</li>
+          <li>Tools Used: Burp Suite, SQLmap</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
-  <footer>
-    <p>&copy; 2025 Ahmed Mahmoud | All rights reserved.</p>
-    <p>Created with passion for cybersecurity and continuous learning.</p>
+  <footer id="contact">
+    <p>Connect with me:</p>
+    <a href="https://www.linkedin.com/in/ahmed-mahmoud-4036742bb/">LinkedIn</a>
+    <a href="https://twitter.com/svfearr">Twitter</a>
+    <a href="https://github.com/svfear/">GitHub</a>
+    <p>© 2025 Ahmed Mahmoud. All rights reserved.</p>
   </footer>
 
 </body>
