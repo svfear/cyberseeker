@@ -31,6 +31,7 @@
       border: 4px solid #00ffc8;
       box-shadow: 0 0 25px #00fff7, 0 0 40px #00fff7aa;
       margin-bottom: 1rem;
+      object-fit: cover;
     }
 
     h1 {
@@ -206,7 +207,6 @@
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
       <a href="#videos">Videos</a>
-
     </nav>
   </header>
 
@@ -249,100 +249,77 @@
       <li><strong>Operating Systems:</strong> Windows, Linux (Ubuntu, Kali)</li>
     </ul>
   </section>
-    <section id="courses">
-    <h3>Courses</h3>
+
+  <section id="courses">
+    <h2>Courses & Certifications</h2>
     <ul>
-      <li>OSCP – Offensive Security Certified Professional</li>
-      <li>eCPPT – eLearnSecurity Certified Professional Penetration Tester</li>
-      <li>Practical Network Penetration Tester (PNPT)</li>
-      <li>Offensive Security Operations (Cybrary)</li>
-      <li>Security Engineering and Cyber Risk (Cybrary)</li>
+      <li>SEC560: Cybersecurity Essentials – SANS Institute</li>
+      <li>OSCP (PEN-200) – Offensive Security Certified Professional</li>
+      <li>CPENT – Certified Penetration Testing Professional</li>
+      <li>Practical Bug Bounty Hunting – TCM Security</li>
+      <li>Various CTF challenges on Hack The Box and TryHackMe platforms</li>
     </ul>
-    </section>
+  </section>
 
   <section id="projects">
-  <h2>Projects</h2>
-    <section id="videos">
-  <h2>YouTube Content</h2>
-  <p>
-    I create technical walkthroughs and tutorials to share cybersecurity techniques, real-world exploitations, and CTF write-ups. 
-    Check out my most recent uploads below and consider subscribing!
-  </p>
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; padding-top: 2rem;">
-    
-    
-    <div>
-      <iframe width="100%" height="200" src="https://www.youtube.com/watch?v=w6nmgtcfOoo" 
-              title="YouTube video player" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
-      <p style="margin-top: 0.5rem;"><strong>Focused on Offensive Security Path</strong></p>
+    <h2>Projects & CTFs</h2>
+
+    <div class="project">
+      <h3>EscapeTwo (HTB)</h3>
+      <p><strong>Skills:</strong> Enumeration, Privilege Escalation, Linux</p>
+      <p>A medium-difficulty machine focusing on privilege escalation vulnerabilities and careful enumeration.</p>
     </div>
 
+    <div class="project">
+      <h3>Cap (HTB)</h3>
+      <p><strong>Skills:</strong> Web Application Testing, RCE, Bash Scripting</p>
+      <p>Web server exploitation leading to Remote Code Execution and privilege escalation.</p>
+    </div>
+
+    <div class="project">
+      <h3>Practical Bug Bounty Hunting</h3>
+      <p>Completed the comprehensive course to sharpen skills in real-world bug bounty scenarios and responsible disclosure.</p>
+    </div>
+
+    <div class="difficulty-section">
+      <h3>Machine Difficulty Breakdown</h3>
+      <ul>
+        <li><strong>Easy:</strong> Enumeration, Basic Web Exploitation, Information Gathering</li>
+        <li><strong>Medium:</strong> Exploitation, Privilege Escalation, Post Exploitation</li>
+        <li><strong>Hard:</strong> Advanced Exploitation, Reverse Engineering, Custom Script Development</li>
+      </ul>
     </div>
   </section>
 
+  <section id="videos">
+    <h2>Cybersecurity Videos</h2>
+    <div>
+      <iframe width="100%" height="200" src="https://www.youtube.com/embed/w6nmgtcfOoo?si=WcZOxCELW-VKI_Gs" 
+        title="YouTube video player" frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen></iframe>
+      <p style="margin-top: 0.5rem;"><strong>Focused on Offensive Security Path</strong></p>
+    </div>
+  </section>
 
-  <article class="project">
-    <h3>Hack The Box (HTB) — <em>01/2025</em></h3>
-    <p>
-      Engaged actively in the Hack The Box challenges to gain hands-on experience in practical penetration testing.
-      Successfully tackled a variety of active machines on the HTB platform, concentrating on advanced exploitation methods,
-      privilege escalation strategies, and post-exploitation techniques. Achieved the status of a
-      <strong>Ranked Hacker</strong> through consistent problem-solving of complex machines, resulting in the accumulation of valuable points.
-    </p>
-  </article>
-
-  <article class="project">
-    <h3>WordPress Risk Assessment – Vosyn Inc. — <em>05/2025</em></h3>
-    <p>
-      Led the design and deployment of a comprehensive risk assessment questionnaire targeting the security posture of Vosyn Inc.'s WordPress environment.
-      Collaborated with the software development team to evaluate update frequency, user account hygiene, plugin and theme sources, file permissions, backup practices, and malware monitoring.
-    </p>
-    <h4><strong>Key Responsibilities:</strong></h4>
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <p>You can reach me via the following platforms:</p>
     <ul>
-      <li>Designed and structured a 35+ question Google Form for WordPress security auditing.</li>
-      <li>Assessed core WordPress, theme, and plugin update processes and responsibility assignment.</li>
-      <li>Evaluated authentication mechanisms, including 2FA, password policies, and user account reviews.</li>
-      <li>Analyzed plugin and theme sourcing, risk awareness, and user education practices.</li>
+      <li>Email: <a href="mailto:svfear.business@gmail.com">svfear.business@gmail.com</a></li>
+      <li>LinkedIn: <a href="https://www.linkedin.com/in/ahmed-mahmoud-4036742bb/" target="_blank" rel="noopener">Ahmed Mahmoud</a></li>
+      <li>GitHub: <a href="https://github.com/svfear" target="_blank" rel="noopener">github.com/svfear</a></li>
     </ul>
-  </article>
+  </section>
 
-  <article class="project">
-    <h3>Mastercard Cybersecurity Virtual Experience Program — <em>01/2025</em></h3>
+  <footer>
+    <p>&copy; 2025 Ahmed Mahmoud. All rights reserved.</p>
     <p>
-      Completed a job simulation as an analyst on Mastercard’s Security Awareness Team via Forage.
+      <a href="https://www.linkedin.com/in/ahmed-mahmoud-4036742bb/" target="_blank" rel="noopener">LinkedIn</a> |
+      <a href="https://github.com/svfear" target="_blank" rel="noopener">GitHub</a> |
+      <a href="mailto:ahmedmahmou5577@gmail.com">Email</a>
     </p>
-    <ul>
-      <li>Identified and reported potential security threats such as phishing attempts.</li>
-      <li>Analyzed business areas for security weaknesses.</li>
-      <li>Implemented targeted cybersecurity training procedures for vulnerable teams.</li>
-    </ul>
-  </article>
-
-  <article class="project">
-    <h3>Tata Cybersecurity Security Analyst Simulation — <em>01/2025</em></h3>
-    <p>
-      Completed a cybersecurity simulation focused on Identity and Access Management (IAM) with Tata Consultancy Services through Forage.
-    </p>
-    <ul>
-      <li>Collaborated with a cybersecurity consulting team to develop secure IAM strategies.</li>
-      <li>Gained hands-on experience with IAM principles and cybersecurity best practices.</li>
-      <li>Aligned IAM planning with business objectives and risk management.</li>
-      <li>Created detailed documentation and presented technical findings effectively.</li>
-    </ul>
-  </article>
-</section>
-
-
- <footer>
-  <p>Connect with me:</p>
-  <a href="https://github.com/svfear" target="_blank">GitHub</a>
-  <a href="https://linkedin.com/in/ahmed-mahmoud-4036742bb" target="_blank">LinkedIn</a>
-  <a href="mailto:ahmedmahmou5577@gmail.com">Email</a>
-  <a href="https://www.youtube.com/@svfear" target="_blank">YouTube</a>
-</footer>
-
+  </footer>
 
 </body>
 </html>
