@@ -98,17 +98,17 @@
     <p>Using <code>showmount -e</code>, I discovered an exported share named <code>/TechSupport</code> accessible by "everyone". After mounting it locally, I found a chat log (<code>ticket.txt</code>) containing a conversation between a developer and support.</p>
     
     <div class="image-container">
-        <img src="Pasted image 20260413161358.png" alt="Discovering NFS Shares">
+        <img src="assets/mount.png" alt="Discovering NFS Shares">
     </div>
     
     <div class="image-container">
-        <img src="Pasted image 20260413161438.png" alt="Mounting the NFS Share locally">
+        <img src="assets/content.png" alt="Mounting the NFS Share locally">
     </div>
 
     <p>Let's read the contents of the directory:</p>
     
     <div class="image-container">
-        <img src="Pasted image 20260413161503.png" alt="Reading the ticket.txt file">
+        <img src="assets/read.png" alt="Reading the ticket.txt file">
     </div>
 
     <div class="note-box">
@@ -119,11 +119,13 @@
     <p>With Alex's credentials, I moved to SMB enumeration using <code>smbclient</code> and found a <code>devshare</code>.</p>
 
     <div class="image-container">
-        <img src="Pasted image 20260413161547.png" alt="SMB client enumeration">
+        <img src="assets/smb.png" alt="SMB client enumeration">
     </div>
     
     <div class="image-container">
-        <img src="Pasted image 20260413161715.png" alt="Accessing devshare files">
+        <img src="assets/devshare.png" alt="Accessing devshare files">
+        <img src="assets/cred.png" alt="Accessing devshare files">
+        
     </div>
 
     <p>Hmmm... going through the files, we got another set of credentials: <code>sa:87N1ns@slls83</code></p>
@@ -132,11 +134,11 @@
     <p>Further investigation led me to use <strong>xfreerdp</strong> to gain a GUI session on the target.</p>
 
     <div class="image-container">
-        <img src="Pasted image 20260413161818.png" alt="Running xfreerdp command">
+        <img src="assets/gui.png" alt="Running xfreerdp command">
     </div>
 
     <div class="image-container">
-        <img src="Pasted image 20260413161850.png" alt="Successful RDP Session">
+        <img src="assets/run.png" alt="Successful RDP Session">
     </div>
 
     <div class="note-box">
@@ -146,7 +148,7 @@
     <p>Once inside, I noticed <strong>Microsoft SQL Server Management Studio (SSMS)</strong>. Using the current session's privileges, I accessed the <code>accounts</code> database. Inside the <code>dbo.devsacc</code> table, I successfully retrieved the clear-text password for the target user <strong>HTB</strong>.</p>
 
     <div class="image-container">
-        <img src="Pasted image 20260413162029.png" alt="SSMS Database dump showing clear-text passwords">
+        <img src="assets/flag.png" alt="SSMS Database dump showing clear-text passwords">
     </div>
 
     <div class="footer">
