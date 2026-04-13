@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From an Exposed NFS Share to Database Compromise | CyberSeeker</title>
+    <style>
+        /* CyberSeeker Dark Theme */
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #161b22;
+            padding: 40px;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        h1, h2, h3 {
+            color: #58a6ff;
+            margin-top: 35px;
+        }
+        h1 {
+            border-bottom: 2px solid #30363d;
+            padding-bottom: 10px;
+            font-size: 2.2em;
+        }
+        h2 {
+            border-left: 4px solid #58a6ff;
+            padding-left: 12px;
+            background-color: rgba(88, 166, 255, 0.05);
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 0 5px 5px 0;
+        }
+        p {
+            font-size: 1.05em;
+        }
+        .highlight { 
+            color: #ff7b72; 
+            font-weight: bold; 
+        }
+        .note-box {
+            background-color: #1f2428;
+            border-left: 4px solid #e3b341;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .image-container {
+            margin: 25px 0;
+            text-align: center;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        code {
+            background-color: #21262d;
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: #ff7b72;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #8b949e;
+            border-top: 1px solid #30363d;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>HTB Footprinting Lab: From an Exposed NFS Share to Database Compromise</h1>
+    
+    <h2>Phase 1: Reconnaissance</h2>
+    <p>Started with a comprehensive service scan. While RDP and SMB were open, the real "entry point" was <strong>Port 2049 (NFS)</strong>. Finding NFS on a Windows target is a common misconfiguration that often leads to unauthorized data access.</p>
+    
+    <div class="image-container">
+        <img src="Pasted image 20260413161222.png" alt="Nmap Scan Results showing open ports">
+    </div>
+
+    <h2>Phase 2: NFS Enumeration & Info Disclosure</h2>
+    <p>Using <code>showmount -e</code>, I discovered an exported share named <code>/TechSupport</code> accessible by "everyone". After mounting it locally, I found a chat log (<code>ticket.txt</code>) containing a conversation between a developer and support.</p>
+    
+    <div class="image-container">
+        <img src="Pasted image 20260413161358.png" alt="Discovering NFS Shares">
+    </div>
+    
+    <div class="image-container">
+        <img src="Pasted image 20260413161438.png" alt="Mounting the NFS Share locally">
+    </div>
+
+    <p>Let's read the contents of the directory:</p>
+    
+    <div class="image-container">
+        <img src="Pasted image 20260413161503.png" alt="Reading the ticket.txt file">
+    </div>
+
+    <div class="note-box">
+        <strong>Key Finding:</strong> The log leaked a web config snippet for an SMTP server, including credentials for a user named <strong>"alex"</strong> (<code class="highlight">lol123!mD</code>).
+    </div>
+
+    <h2>Phase 3: Lateral Movement (SMB)</h2>
+    <p>With Alex's credentials, I moved to SMB enumeration using <code>smbclient</code> and found a <code>devshare</code>.</p>
+
+    <div class="image-container">
+        <img src="Pasted image 20260413161547.png" alt="SMB client enumeration">
+    </div>
+    
+    <div class="image-container">
+        <img src="Pasted image 20260413161715.png" alt="Accessing devshare files">
+    </div>
+
+    <p>Hmmm... going through the files, we got another set of credentials: <code>sa:87N1ns@slls83</code></p>
+
+    <h2>Phase 4: Gaining GUI Access & Database Pillage</h2>
+    <p>Further investigation led me to use <strong>xfreerdp</strong> to gain a GUI session on the target.</p>
+
+    <div class="image-container">
+        <img src="Pasted image 20260413161818.png" alt="Running xfreerdp command">
+    </div>
+
+    <div class="image-container">
+        <img src="Pasted image 20260413161850.png" alt="Successful RDP Session">
+    </div>
+
+    <div class="note-box">
+        <strong>Note:</strong> While opening Microsoft SQL Server, I used "Run as administrator" utilizing the previously discovered credentials: <code>sa:87N1ns@slls83</code>.
+    </div>
+
+    <p>Once inside, I noticed <strong>Microsoft SQL Server Management Studio (SSMS)</strong>. Using the current session's privileges, I accessed the <code>accounts</code> database. Inside the <code>dbo.devsacc</code> table, I successfully retrieved the clear-text password for the target user <strong>HTB</strong>.</p>
+
+    <div class="image-container">
+        <img src="Pasted image 20260413162029.png" alt="SSMS Database dump showing clear-text passwords">
+    </div>
+
+    <div class="footer">
+        <p>Documented for the CPTS Journey | CyberSeeker</p>
+    </div>
+</div>
+
+</body>
+</html>
