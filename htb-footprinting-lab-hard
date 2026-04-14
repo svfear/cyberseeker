@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTB Footprinting Lab (Hard) - Write-up</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #58a6ff;
+            --terminal-bg: #010409;
+            --terminal-text: #00ff00;
+            --border-color: #30363d;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        h1 {
+            color: #fff;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .highlight {
+            color: #ff7b72;
+            font-weight: bold;
+        }
+        pre {
+            background-color: var(--terminal-bg);
+            color: var(--terminal-text);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            font-family: "Courier New", Courier, monospace;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 20px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .success-box {
+            background-color: rgba(46, 160, 67, 0.15);
+            border-left: 4px solid #2ea043;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>HTB Footprinting Lab - Hard</h1>
+    <p style="text-align: center; color: #8b949e;">A comprehensive write-up detailing the exploitation path from SNMP enumeration to Database access.</p>
+
+    <h2>1. Initial Reconnaissance</h2>
+    <p>First, let's scan the target with Nmap to know what we have!</p>
+    <pre><code>nmap -sV -sC -Pn 10.129.61.185</code></pre>
+    <img src="assets2/first-scan.png" alt="Nmap TCP Scan Results">
+    
+    <p>Based on the scan, we found several open ports:</p>
+    <ul>
+        <li><span class="highlight">22/TCP</span> is open &gt;&gt; SSH port</li>
+        <li><span class="highlight">110/TCP</span> is open &gt;&gt; POP3</li>
+        <li><span class="highlight">143/TCP</span> is open &gt;&gt; IMAP (very important)</li>
+        <li><span class="highlight">993/TCP</span> &gt;&gt; SSL/IMAP</li>
+        <li><span class="highlight">995/TCP</span> &gt;&gt; SSL/POP3</li>
+    </ul>
+
+    <h2>2. SNMP Enumeration</h2>
+    <p>This lab gives us a hint about SNMP in its description, so let's perform a UDP scan focusing on top ports:</p>
+    <pre><code>nmap -sV --top-port 100 -sU 10.129.61.185</code></pre>
+    <img src="assets2/scan2.png" alt="Nmap UDP Scan Results">
+    
+    <p>Found it! <strong>161/UDP SNMP is open!</strong> Let's look for the public string using <code>snmpwalk</code>.</p>
+    <img src="assets2/timeout.png" alt="SNMPWalk Timeout Error">
+    <p>Hmmm... timeout! No problem, we can look for other community strings by bruteforcing using the <code>onesixtyone</code> tool and SecLists!</p>
+    <img src="assets2/bruteforce.png" alt="onesixtyone Bruteforce Results">
+    
+    <div class="success-box">
+        Nice! We got a valid community string called <strong>backup</strong>.
+    </div>
+
+    <p>Now, let's use what we found with <code>snmpwalk</code>:</p>
+    <pre><code>snmpwalk -v2c -c backup 10.129.61.185</code></pre>
+    <img src="assets2/tom-cred.png" alt="SNMPWalk Results">
+    <p>Pingoo! We retrieved credentials: <strong>tom : NMds732Js2761</strong></p>
+
+    <h2>3. IMAP Exploitation</h2>
+    <p>If you remember, IMAP is open on our target! We connect to port 143 here as it's the default port for IMAP, and it is unencrypted instead of 993.</p>
+    <img src="" alt="Connecting to IMAP">
+    
+    <p>Now let's use the credentials we found for the user Tom:</p>
+    <pre><code>A001 LOGIN tom NMds732Js2761</code></pre>
+    <img src="assets2/openssl.png" alt="IMAP Login and Reading Emails">
+    <img src="assets2/ssh-key.png" alt="IMAP Login and Reading Emails">
+    
+    <div class="success-box">
+        After getting into the inbox and reading what it contains, we found the <strong>SSH private key</strong>. Yaaahhh!
+    </div>
+
+    <h2>4. SSH Access & Database Enumeration</h2>
+    <p>Now let's copy the key, save it using <code>nano id_rsa</code>, and do not forget to set the correct permissions: <code>chmod 600 id_rsa</code>.</p>
+    <p>After that, let's SSH into the machine!</p>
+    <pre><code>ssh -i id_rsa tom@10.129.61.185</code></pre>
+    <img src="assets2/ssh-login.png" alt="Successful SSH Login">
+    <p>We are in! Let's check <code>/etc/passwd</code> because I did not find something useful using only <code>ls</code>.</p>
+    <img src="assets2/etcpasswd.png" alt="Reading /etc/passwd">
+    
+    <p>Note the <strong>mysql</strong> service running! Let's connect to it:</p>
+    <pre><code>mysql -u tom -p</code></pre>
+    <img src="assets2/mysql-login.png" alt="MySQL Login">
+    
+    <p>Great! Let's discover the databases:</p>
+    <pre><code>show databases;</code></pre>
+    <img src="assets2/show-database.png" alt="Showing MySQL Databases">
+    
+    <p>We are looking for the HTB password, remember? So let's query the users table:</p>
+    <pre><code>SELECT * FROM users WHERE username LIKE "HTB";</code></pre>
+    <img src="assets2/final-pass.png" alt="Extracting HTB Password">
+    
+    <div class="success-box">
+        <strong>Done :D</strong> Target successfully pawned!
+    </div>
+
+</body>
+</html>
