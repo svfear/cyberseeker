@@ -134,8 +134,8 @@
     <div class="container">
         
         <div class="card">
-            <h2>Initial Access & Scope</h2>
-            <p>To begin we need to add the target IP to the <code>inlanefreight.htb</code> domain in the local <code>/etc/hosts</code> file to ensure proper resolution during the enumeration phase.</p>
+            <h2>Initial Access & Scope Definition</h2>
+            <p>Every professional engagement begins with defining the scope. To interact with the target environment using domain names rather than raw IPs, I updated the local <code>/etc/hosts</code> file. This allows for proper virtual host resolution during the later stages of the attack.</p>
             <img src="assets/add-host.png" alt="Screenshot: Adding IP and inlanefreight.htb to /etc/hosts file" class="step-img">
             <pre><code># Command used:
 echo "10.129.x.x  inlanefreight.htb" | sudo tee -a /etc/hosts</code></pre>
@@ -143,40 +143,39 @@ echo "10.129.x.x  inlanefreight.htb" | sudo tee -a /etc/hosts</code></pre>
 
         <div class="card">
             <h2>WHOIS Record Enumeration</h2>
-            <p>The first objective was to retrieve the <strong>IANA ID</strong>. I performed a WHOIS query against the target domain to gather registrar details.</p>
+            <p>Passive reconnaissance began with a WHOIS lookup. The goal was to extract organizational data and registrar details. Specifically, I needed to identify the <strong>IANA ID</strong>, which provides insight into the domain's registrar and management history.</p>
             <pre><code>whois inlanefreight.htb</code></pre>
             <img src="assets/whois-id.png" alt="Screenshot: WHOIS output highlighting the Registrar IANA ID" class="step-img">
-            <p>The IANA ID was successfully identified in the registrar information block.</p>
+            <p>The IANA ID was successfully located within the registrar information block, completing the initial footprinting requirements.</p>
         </div>
 
         <div class="card">
-            <h2>Fingerprinting Web Technologies</h2>
-            <p>I utilized <code>whatweb</code> to identify the web server and backend technologies. The scan revealed the target is running an <strong>nginx</strong> web server.</p>
+            <h2>Infrastructure & Technology Fingerprinting</h2>
+            <p>To understand the attack surface, I performed technology fingerprinting using <code>whatweb</code>. Identifying the backend technologies helps in choosing the right exploits or discovery wordlists. The scan confirmed the target utilizes an <strong>nginx</strong> web server.</p>
             <img src="assets/whatweb.png" alt="Screenshot: WhatWeb scan results showing nginx server version" class="step-img">
         </div>
 
         <div class="card">
-            <h2>Vhost Fuzzing & Admin Discovery</h2>
-            <p>While <code>robots.txt</code> on the main domain was limited, I moved to Virtual Host (Vhost) brute-forcing. This led to the discovery of a non-standard subdomain: <code>web1337.inlanefreight.htb</code>.</p>
-            <img src="assets/gobuster-web.png" alt="Screenshot: FFUF/Gobuster results showing web1337 subdomain discovery" class="step-img">
+            <h2>Virtual Host (Vhost) Discovery</h2>
+            <p>Standard web crawling on the main domain yielded limited results. I pivoted to Virtual Host brute-forcing to find subdomains that might be hosted on the same server but not indexed by public DNS. This led to the discovery of <code>web1337.inlanefreight.htb</code>.</p>
+            <img src="assets/gobuster-web.png" alt="Screenshot: Gobuster results showing web1337 subdomain discovery" class="step-img">
           
-            
-            <p>Checking the <code>robots.txt</code> on this new subdomain revealed a hidden directory: <code>/admin_h1dd3n/</code>.</p>
-            <img src="assets/robots-curl.png" alt="Screenshot: Browser view of the admin_h1dd3n directory containing the API key" class="step-img">
-            <div class="info-box">Successfully retrieved the first API key from the hidden directory.</div>
+            <p>Upon discovering the new subdomain, a manual inspection of the <code>robots.txt</code> file revealed a high-value hidden directory: <code>/admin_h1dd3n/</code>.</p>
+            <img src="assets/robots-curl.png" alt="Screenshot: Curled robots.txt revealing the admin directory" class="step-img">
+            <div class="info-box">Extracted the first administrative API key from the newly discovered directory.</div>
         </div>
 
         <div class="card">
-            <h2>Advanced Crawling with ReconSpider</h2>
-            <p>The final task required finding a specific email address. My initial attempt with <code>ReconSpider.py</code> on the discovered subdomain yielded no results.</p>
+            <h2>Automated Crawling & Deep Enumeration</h2>
+            <p>The final objective required a deeper dive to locate sensitive contact information. An initial crawl with <code>ReconSpider.py</code> on the <code>web1337</code> subdomain came back empty, indicating that the target data was likely nested deeper within a dev environment.</p>
             <pre><code>python3 ReconSpider.py http://web1337.inlanefreight.htb:30907</code></pre>
             <img src="assets/curl-rob-empty.png" alt="Screenshot: ReconSpider output showing 0 results initially" class="step-img">
             
-            <p>Recognizing the need for deeper enumeration, I performed another round of fuzzing which uncovered <code>dev.web1337.inlanefreight.htb</code>. Running the spider on this development subdomain was successful.</p>
-            <img src="assets/gobuster-dev.png" alt="Screenshot: ReconSpider final output with the email address and secondary API key" class="step-img"> 
-            <img src="assets/dev-results.png" alt="Screenshot: ReconSpider final output with the email address and secondary API key" class="step-img">
-            <img src="assets/api-key-2.png" alt="Screenshot: ReconSpider final output with the email address and secondary API key" class="step-img">
-            <div class="info-box">Conclusion: Final email and administrative keys were extracted via deep subdomain fuzzing and automated crawling.</div>
+            <p>I initiated a second round of fuzzing specifically targeting the <code>web1337</code> subdomain. This revealed a secondary development layer: <code>dev.web1337.inlanefreight.htb</code>. Running the spider here successfully pulled the hidden data.</p>
+            <img src="assets/gobuster-dev.png" alt="Screenshot: Gobuster output finding the dev subdomain" class="step-img"> 
+            <img src="assets/dev-results.png" alt="Screenshot: ReconSpider results showing extracted email" class="step-img">
+            <img src="assets/api-key-2.png" alt="Screenshot: ReconSpider results showing final API key" class="step-img">
+            <div class="info-box">Conclusion: By combining Vhost brute-forcing with automated crawling, I successfully mapped the internal infrastructure and retrieved the final email and administrative keys.</div>
         </div>
 
     </div>
