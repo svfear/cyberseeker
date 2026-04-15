@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTB Write-up | Information Gathering - Web Edition</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --primary: #00ffaa;
+            --secondary: #58a6ff;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --code-bg: #010409;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 255, 170, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.5rem; margin: 0; color: #fff; letter-spacing: -1px; }
+        .author { color: var(--text-muted); margin-top: 0.5rem; font-size: 0.9rem; }
+
+        .container {
+            max-width: 850px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        h2 {
+            color: var(--secondary);
+            margin-top: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: ">";
+            color: var(--primary);
+            margin-right: 10px;
+            font-family: monospace;
+        }
+
+        code {
+            background: var(--code-bg);
+            color: #ff7b72;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'SFMono-Regular', Consolas, monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            padding: 1.2rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .step-img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            margin: 1.5rem 0;
+            display: block;
+            background: #0d1117;
+        }
+
+        .info-box {
+            border-left: 4px solid var(--primary);
+            background: rgba(0, 255, 170, 0.05);
+            padding: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <span class="badge">Skill Assessment Write-up</span>
+        <h1>Inlanefreight Footprinting</h1>
+        <p class="author">By: Svfear</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="card">
+            <h2>Initial Access & Scope</h2>
+            <p>To begin we need to add the target IP to the <code>inlanefreight.htb</code> domain in the local <code>/etc/hosts</code> file to ensure proper resolution during the enumeration phase.</p>
+            <img src="assets/add-host.png" alt="Screenshot: Adding IP and inlanefreight.htb to /etc/hosts file" class="step-img">
+            <pre><code># Command used:
+echo "10.129.x.x  inlanefreight.htb" | sudo tee -a /etc/hosts</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>WHOIS Record Enumeration</h2>
+            <p>The first objective was to retrieve the <strong>IANA ID</strong>. I performed a WHOIS query against the target domain to gather registrar details.</p>
+            <pre><code>whois inlanefreight.htb</code></pre>
+            <img src="assets/whois-id.png" alt="Screenshot: WHOIS output highlighting the Registrar IANA ID" class="step-img">
+            <p>The IANA ID was successfully identified in the registrar information block.</p>
+        </div>
+
+        <div class="card">
+            <h2>Fingerprinting Web Technologies</h2>
+            <p>I utilized <code>whatweb</code> to identify the web server and backend technologies. The scan revealed the target is running an <strong>nginx</strong> web server.</p>
+            <img src="assets/whatweb.png" alt="Screenshot: WhatWeb scan results showing nginx server version" class="step-img">
+        </div>
+
+        <div class="card">
+            <h2>Vhost Fuzzing & Admin Discovery</h2>
+            <p>While <code>robots.txt</code> on the main domain was limited, I moved to Virtual Host (Vhost) brute-forcing. This led to the discovery of a non-standard subdomain: <code>web1337.inlanefreight.htb</code>.</p>
+            <img src="assets/gobuster-web.png" alt="Screenshot: FFUF/Gobuster results showing web1337 subdomain discovery" class="step-img">
+          
+            
+            <p>Checking the <code>robots.txt</code> on this new subdomain revealed a hidden directory: <code>/admin_h1dd3n/</code>.</p>
+            <img src="assets/robots-curl.png" alt="Screenshot: Browser view of the admin_h1dd3n directory containing the API key" class="step-img">
+            <div class="info-box">Successfully retrieved the first API key from the hidden directory.</div>
+        </div>
+
+        <div class="card">
+            <h2>Advanced Crawling with ReconSpider</h2>
+            <p>The final task required finding a specific email address. My initial attempt with <code>ReconSpider.py</code> on the discovered subdomain yielded no results.</p>
+            <pre><code>python3 ReconSpider.py http://web1337.inlanefreight.htb:30907</code></pre>
+            <img src="assets/curl-rob-empty.png" alt="Screenshot: ReconSpider output showing 0 results initially" class="step-img">
+            
+            <p>Recognizing the need for deeper enumeration, I performed another round of fuzzing which uncovered <code>dev.web1337.inlanefreight.htb</code>. Running the spider on this development subdomain was successful.</p>
+            <img src="assets/gobuster-dev.png" alt="Screenshot: ReconSpider final output with the email address and secondary API key" class="step-img"> 
+            <img src="assets/dev-results.png" alt="Screenshot: ReconSpider final output with the email address and secondary API key" class="step-img">
+            <img src="assets/api-key-2.png" alt="Screenshot: ReconSpider final output with the email address and secondary API key" class="step-img">
+            <div class="info-box">Conclusion: Final email and administrative keys were extracted via deep subdomain fuzzing and automated crawling.</div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Ahmed | Professional Cybersecurity Portfolio</p>
+    </footer>
+
+</body>
+</html>
