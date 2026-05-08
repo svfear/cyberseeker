@@ -108,7 +108,7 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 0 10%;
+      padding: 10rem 10% 4rem;
       position: relative;
       overflow: hidden;
     }
@@ -668,24 +668,28 @@
     .hero-photo {
       width: 220px;
       height: 220px;
-      border-radius: 4px;
+      border-radius: 50%;
       object-fit: cover;
       object-position: top;
-      border: 1px solid var(--red-dim);
+      border: 3px solid var(--red);
       display: block;
       filter: grayscale(20%);
-      transition: filter 0.3s;
+      transition: filter 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 25px var(--red-glow), 0 0 60px rgba(192,57,43,0.1);
     }
 
-    .hero-photo:hover { filter: grayscale(0%); }
+    .hero-photo:hover {
+      filter: grayscale(0%);
+      box-shadow: 0 0 35px var(--red-glow), 0 0 80px rgba(192,57,43,0.2);
+    }
 
     .hero-photo-wrap::before {
       content: '';
       position: absolute;
       inset: -6px;
       border: 1px solid var(--red-dim);
-      border-radius: 4px;
-      opacity: 0.4;
+      border-radius: 50%;
+      opacity: 0.5;
     }
 
     .hero-photo-wrap::after {
@@ -700,7 +704,7 @@
 
     @media (max-width: 768px) {
       .hero-inner { flex-direction: column; gap: 2rem; }
-      .hero-photo { width: 160px; height: 160px; }
+      .hero-photo { width: 180px; height: 180px; border-radius: 50%; }
     }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -723,10 +727,12 @@
       nav { padding: 1rem 1.5rem; }
       .nav-links { gap: 1rem; }
       .nav-links a { font-size: 0.75rem; }
-      #hero { padding: 0 6%; }
+      #hero { padding: 7rem 6% 4rem; }
       section { padding: 4rem 6%; }
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .hero-inner { flex-direction: column; gap: 2.5rem; align-items: center; }
+      .hero-photo { width: 180px; height: 180px; border-radius: 50%; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
 
