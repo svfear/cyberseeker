@@ -651,7 +651,57 @@
       letter-spacing: 1px;
     }
 
-    /* ── ANIMATIONS ────────────────────────────────────────────── */
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .hero-photo-wrap {
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .hero-photo {
+      width: 220px;
+      height: 220px;
+      border-radius: 4px;
+      object-fit: cover;
+      object-position: top;
+      border: 1px solid var(--red-dim);
+      display: block;
+      filter: grayscale(20%);
+      transition: filter 0.3s;
+    }
+
+    .hero-photo:hover { filter: grayscale(0%); }
+
+    .hero-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border: 1px solid var(--red-dim);
+      border-radius: 4px;
+      opacity: 0.4;
+    }
+
+    .hero-photo-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -10px; right: -10px;
+      width: 60px; height: 60px;
+      background: var(--red);
+      opacity: 0.15;
+      z-index: -1;
+    }
+
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; gap: 2rem; }
+      .hero-photo { width: 160px; height: 160px; }
+    }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -705,7 +755,11 @@
   <section id="hero">
     <div class="hero-grid"></div>
     <div class="hero-glow"></div>
-    <div class="hero-content">
+    <div class="hero-inner">
+      <div class="hero-photo-wrap">
+        <img src="1715028775217.jpg" alt="Ahmed Mahmoud" class="hero-photo" />
+      </div>
+      <div class="hero-content">
       <div class="hero-tag">BASED IN ALEXANDRIA, EGYPT</div>
       <h1 class="hero-name">Ahmed<br><span class="red">Mahmoud</span></h1>
       <p class="hero-title">Junior Penetration Tester &nbsp;|&nbsp; Offensive Security Specialist &nbsp;|&nbsp; Bug Bounty Hunter</p>
@@ -731,13 +785,11 @@
         </div>
       </div>
       <div class="hero-btns">
-        <a href="#contact" class="btn btn-primary">Get In Touch</a>
-        <a href="https://svfear.github.io/cyberseeker/" target="_blank" rel="noopener" class="btn btn-outline">View Portfolio</a>
+        <a href="https://www.linkedin.com/in/ahmed-mahmoud-svfear4036742bb" target="_blank" rel="noopener" class="btn btn-primary">Get In Touch</a>
+      </div>
       </div>
     </div>
   </section>
-
-  <!-- ABOUT -->
   <section id="about">
     <div class="section-tag">Who I Am</div>
     <h2 class="section-title">About Me</h2>
@@ -1015,7 +1067,7 @@
         <span class="post-title">HTB Footprinting Lab Medium — NFS Share to Database Compromise</span>
         <span class="post-arrow">→</span>
       </a>
-      <a href="web-pen-methedology.html" class="post-item">
+      <a href="web-pen-methodology.html" class="post-item">
         <span class="post-title">Web Penetration Testing Methodology</span>
         <span class="post-arrow">→</span>
       </a>
@@ -1039,12 +1091,12 @@
     <div class="section-tag">Media</div>
     <h2 class="section-title">Videos</h2>
     <div class="video-wrap">
-      <iframe src="https://www.youtube.com/embed/w6nmgtcfOoo?si=WcZOxCELW-VKI_Gs"
+      <iframe src="https://www.youtube.com/embed/w6nmgtcfOoo"
         title="Offensive Security Path"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen></iframe>
-      <div class="video-caption">// Offensive Security Career Path — Ahmed Mahmoud</div>
+      <div class="video-caption">// Offensive Security Career Path — <a href="https://youtube.com/@svfear" target="_blank" rel="noopener" style="color:var(--red-lite);text-decoration:none;">@svfear on YouTube</a></div>
     </div>
   </section>
 
