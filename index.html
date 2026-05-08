@@ -3,366 +3,1086 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Ahmed Mahmoud – Penetration Tester, Bug Hunter, and CTF Enthusiast. Explore my projects, professional background, and cybersecurity insights.">
+  <meta name="description" content="Ahmed Mahmoud – Junior Penetration Tester, Bug Bounty Hunter, CPTS Candidate. Offensive security professional based in Alexandria, Egypt.">
   <title>Ahmed Mahmoud | Penetration Tester</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg:        #0a0a0a;
+      --bg2:       #111111;
+      --bg3:       #161616;
+      --red:       #c0392b;
+      --red-lite:  #e74c3c;
+      --red-glow:  #c0392b55;
+      --red-dim:   #7b241c;
+      --white:     #f0f0f0;
+      --gray:      #888888;
+      --gray-lite: #bbbbbb;
+      --border:    #2a2a2a;
+      --mono:      'Share Tech Mono', monospace;
+      --head:      'Rajdhani', sans-serif;
+      --body:      'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background-color: #0b0c10;
-      color: #00fff7;
-      line-height: 1.8;
-      letter-spacing: 0.5px;
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: crosshair;
     }
 
-    header {
-      text-align: center;
-      padding: 3rem 1rem;
-      border-bottom: 2px solid #00ffc8;
-      background: linear-gradient(180deg, #0b0c10, #14161a);
-      box-shadow: 0 0 30px #00fff7aa;
+    /* ── SCROLLBAR ─────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--red); }
+
+    /* ── NOISE OVERLAY ─────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
     }
 
-    .profile-img {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      border: 4px solid #00ffc8;
-      box-shadow: 0 0 25px #00fff7, 0 0 40px #00fff7aa;
-      margin-bottom: 1rem;
-      object-fit: cover;
+    /* ── NAV ───────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
     }
 
-    h1 {
-      font-size: 3rem;
-      color: #ffffff;
-      text-shadow: 0 0 8px #00fff7;
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 1rem;
+      color: var(--red-lite);
+      letter-spacing: 2px;
+    }
+
+    .nav-logo span { color: var(--gray); }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+
+    .nav-links a {
+      font-family: var(--head);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--red);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── HERO ──────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 10%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(192,57,43,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(192,57,43,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%; right: 10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(192,57,43,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 720px; }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--red-lite);
+      letter-spacing: 3px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 30px; height: 1px;
+      background: var(--red);
+    }
+
+    .hero-name {
+      font-family: var(--head);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--white);
+      letter-spacing: -1px;
       margin-bottom: 0.5rem;
     }
 
-    p {
-      font-size: 1.2rem;
+    .hero-name .red { color: var(--red-lite); }
+
+    .hero-title {
+      font-family: var(--mono);
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--gray);
       margin-bottom: 1.5rem;
-    }
-
-    nav {
-      margin-top: 1rem;
-    }
-
-    nav a {
-      color: #00ffc8;
-      margin: 0 25px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      text-transform: uppercase;
       letter-spacing: 1px;
-      transition: 0.3s ease;
     }
 
-    nav a:hover {
-      color: #ffffff;
-      text-shadow: 0 0 10px #00ffc8;
-    }
-
-    section {
-      padding: 3rem 10%;
-      border-bottom: 1px solid #00ffc833;
-      transition: background 0.3s ease;
-    }
-
-    section:hover {
-      background-color: #1a1d22;
-    }
-
-    h2 {
-      border-bottom: 2px solid #00ffc8;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1.2rem;
-      font-size: 2.5rem;
-      color: #ffffff;
-      text-shadow: 0 0 10px #00ffc8;
-    }
-
-    h3, .sub-heading {
-      color: #00ffff;
-      margin-top: 1.5rem;
-      font-size: 1.4rem;
-      text-shadow: 0 0 5px #00fff7;
-    }
-
-    ul {
-      list-style-type: square;
-      margin-left: 2rem;
-      padding-left: 1rem;
-    }
-
-    ul li {
-      margin: 0.5rem 0;
-    }
-
-    a {
-      color: #00fff7;
-      transition: 0.3s ease;
-    }
-
-    a:hover {
-      text-shadow: 0 0 8px #00ffc8;
-      color: #ffffff;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: #0d0f13;
-      border-top: 1px solid #00ffc833;
+    .hero-desc {
       font-size: 1rem;
-      color: #ffffff;
-      text-shadow: 0 0 5px #00ffc8;
+      color: var(--gray-lite);
+      line-height: 1.8;
+      max-width: 540px;
+      margin-bottom: 2.5rem;
     }
 
-    footer a {
-      color: #00fff7;
-      margin: 0 1rem;
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat { display: flex; flex-direction: column; }
+
+    .stat-num {
+      font-family: var(--head);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--red-lite);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      font-family: var(--head);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       text-decoration: none;
-      font-weight: bold;
+      padding: 0.75rem 2rem;
+      border: 1px solid var(--red);
+      cursor: pointer;
+      transition: all 0.25s;
+      display: inline-block;
     }
 
-    footer a:hover {
-      text-shadow: 0 0 8px #00ffc8;
-      color: #ffffff;
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
     }
 
-    .project {
-      background: #14161a;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 0 20px #00fff7;
-      margin-bottom: 2rem;
+    .btn-primary:hover {
+      background: var(--red-lite);
+      border-color: var(--red-lite);
+      box-shadow: 0 0 20px var(--red-glow);
     }
 
-    .project h3 {
-      color: #00ffc8;
-      font-size: 2rem;
+    .btn-outline {
+      background: transparent;
+      color: var(--red-lite);
     }
 
-    .difficulty-section {
-      margin-top: 2rem;
+    .btn-outline:hover {
+      background: var(--red-glow);
+      color: var(--white);
     }
 
-    .difficulty-section h3 {
-      color: #00ffc8;
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
+    /* ── SECTIONS ──────────────────────────────────────────────── */
+    section { padding: 6rem 10%; }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--red-lite);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-tag::before {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 1px;
+      background: var(--red);
+    }
+
+    .section-title {
+      font-family: var(--head);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 3rem;
+      letter-spacing: -0.5px;
+    }
+
+    /* ── ABOUT ─────────────────────────────────────────────────── */
+    #about { background: var(--bg2); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--gray-lite);
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .about-certs {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cert-card {
+      border: 1px solid var(--border);
+      padding: 1.2rem 1.5rem;
+      background: var(--bg3);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .cert-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--red);
+    }
+
+    .cert-card:hover { border-color: var(--red-dim); }
+
+    .cert-name {
+      font-family: var(--head);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .cert-issuer {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 1px;
+    }
+
+    .cert-status {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      padding: 0.2rem 0.6rem;
+      background: rgba(192,57,43,0.15);
+      color: var(--red-lite);
+      border: 1px solid var(--red-dim);
+    }
+
+    .cert-status.planned {
+      background: rgba(100,100,100,0.1);
+      color: var(--gray);
+      border-color: var(--border);
+    }
+
+    /* ── EXPERIENCE ────────────────────────────────────────────── */
+    #experience { background: var(--bg); }
+
+    .exp-list { display: flex; flex-direction: column; gap: 2rem; }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exp-item:last-child { border-bottom: none; }
+
+    .exp-meta { padding-top: 0.2rem; }
+
+    .exp-date {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--red-lite);
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+    }
+
+    .exp-company {
+      font-family: var(--head);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray);
+      letter-spacing: 1px;
       text-transform: uppercase;
     }
 
-    .difficulty-section ul {
-      list-style-type: none;
-      padding: 0;
+    .exp-role {
+      font-family: var(--head);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
     }
 
-    .difficulty-section li {
-      margin: 1rem 0;
-      font-size: 1.1rem;
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .exp-bullets li {
+      font-size: 0.9rem;
+      color: var(--gray-lite);
+      padding-left: 1.2rem;
+      position: relative;
     }
 
-    @media screen and (max-width: 768px) {
-      section {
-        padding: 2rem 5%;
-      }
+    .exp-bullets li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--red);
+      font-weight: bold;
+    }
 
-      nav a {
-        font-size: 1rem;
-        margin: 0 15px;
-      }
+    /* ── SKILLS ────────────────────────────────────────────────── */
+    #skills { background: var(--bg2); }
 
-      h1 {
-        font-size: 2.5rem;
-      }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
 
-      .profile-img {
-        width: 140px;
-        height: 140px;
-      }
+    .skill-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
 
-      .project {
-        padding: 1rem;
-      }
+    .skill-card:hover {
+      border-color: var(--red-dim);
+      transform: translateY(-3px);
+    }
+
+    .skill-cat {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--red-lite);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--gray-lite);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.6rem;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+
+    .tag:hover {
+      background: rgba(192,57,43,0.12);
+      border-color: var(--red-dim);
+      color: var(--white);
+    }
+
+    /* ── PROJECTS ──────────────────────────────────────────────── */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--red), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+
+    .project-card:hover {
+      border-color: var(--red-dim);
+      transform: translateY(-4px);
+    }
+
+    .project-card:hover::after { transform: scaleX(1); }
+
+    .project-number {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--red-dim);
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .project-title {
+      font-family: var(--head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+
+    .project-date {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--gray-lite);
+      line-height: 1.7;
+    }
+
+    /* ── POSTS ─────────────────────────────────────────────────── */
+    #posts { background: var(--bg2); }
+
+    .posts-list { display: flex; flex-direction: column; gap: 0; }
+
+    .post-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--gray-lite);
+      transition: color 0.2s, padding-left 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .post-item:hover {
+      color: var(--white);
+      padding-left: 0.75rem;
+    }
+
+    .post-item:hover .post-arrow { color: var(--red-lite); }
+
+    .post-title { font-family: var(--body); font-weight: 400; }
+
+    .post-arrow {
+      font-family: var(--mono);
+      color: var(--gray);
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+
+    /* ── CONTACT ───────────────────────────────────────────────── */
+    #contact {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+
+    .contact-inner .section-tag { justify-content: center; }
+    .contact-inner .section-tag::before { display: none; }
+
+    .contact-desc {
+      color: var(--gray-lite);
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .contact-link {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .contact-link:hover { color: var(--red-lite); }
+
+    .contact-link .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      display: inline-block;
+    }
+
+    /* ── FOOTER ────────────────────────────────────────────────── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 10%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 1px;
+    }
+
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--red-lite); }
+
+    /* ── VIDEOS ────────────────────────────────────────────────── */
+    #videos { background: var(--bg); }
+
+    .video-wrap {
+      border: 1px solid var(--border);
+      overflow: hidden;
+      max-width: 860px;
+    }
+
+    .video-wrap iframe { display: block; width: 100%; height: 480px; }
+
+    .video-caption {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--gray);
+      padding: 0.75rem 1rem;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      letter-spacing: 1px;
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content > * {
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-tag        { animation-delay: 0.1s; }
+    .hero-name       { animation-delay: 0.2s; }
+    .hero-title      { animation-delay: 0.3s; }
+    .hero-desc       { animation-delay: 0.4s; }
+    .hero-stats      { animation-delay: 0.5s; }
+    .hero-btns       { animation-delay: 0.6s; }
+
+    /* ── RESPONSIVE ────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.75rem; }
+      #hero { padding: 0 6%; }
+      section { padding: 4rem 6%; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .hero-stats { gap: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <img src="1715028775217.jpg" alt="Ahmed Mahmoud" class="profile-img" />
-    <h1>Ahmed Mahmoud</h1>
-    <p>Penetration Tester | Red Team Enthusiast | Bug Bounty Hunter | CTF Player</p>
-    <nav>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">AM<span>//</span>PENTEST</div>
+    <ul class="nav-links">
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
-      <a href="#courses">Courses</a>
-      <a href="#posts">Posts</a>
       <a href="#projects">Projects</a>
+      <a href="#posts">Posts</a>
       <a href="#contact">Contact</a>
-      <a href="#videos">Videos</a>
-    </nav>
-  </header>
+    </ul>
+  </nav>
 
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-tag">BASED IN ALEXANDRIA, EGYPT</div>
+      <h1 class="hero-name">Ahmed<br><span class="red">Mahmoud</span></h1>
+      <p class="hero-title">Junior Penetration Tester &nbsp;|&nbsp; Offensive Security Specialist &nbsp;|&nbsp; Bug Bounty Hunter</p>
+      <p class="hero-desc">
+        Offensive security professional focused on web application security, network penetration testing, and Active Directory exploitation. CPTS track completed, exam preparation in progress. Pursuing a career in red team operations.
+      </p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">~250</span>
+          <span class="stat-label">Targets Hacked</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">400+</span>
+          <span class="stat-label">Module Sections</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">500+</span>
+          <span class="stat-label">Challenges Solved</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">750K+</span>
+          <span class="stat-label">Words Studied</span>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-primary">Get In Touch</a>
+        <a href="https://svfear.github.io/cyberseeker/" target="_blank" rel="noopener" class="btn btn-outline">View Portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
   <section id="about">
-    <h2>About Me</h2>
-    <p>
-      I am a passionate and dedicated penetration tester with over 4 years of hands-on experience in identifying vulnerabilities, conducting network and web application penetration testing, and adhering to ethical hacking practices. As an accomplished bug bounty hunter, I have discovered critical vulnerabilities and contributed to enhancing the cybersecurity posture of various organizations. I am eager to continue developing my skills and pursue opportunities that allow me to apply my expertise and make a meaningful impact in the field of cybersecurity.
-    </p>
+    <div class="section-tag">Who I Am</div>
+    <h2 class="section-title">About Me</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I am a Junior Penetration Tester who has been building offensive security skills since middle school. What started as curiosity turned into a career path — I am now fully dedicated to ethical hacking, red team operations, and breaking things to make them more secure.
+        </p>
+        <p>
+          I recently completed the full HTB CPTS track, covering everything from reconnaissance and enumeration to Active Directory exploitation, lateral movement, and post-exploitation. I hacked around 250 targets, finished 400+ module sections, solved 500+ challenge questions, and studied over 750,000 words of technical content throughout this journey.
+        </p>
+        <p>
+          Beyond labs, I hunt bugs on HackerOne and Intigriti and have a background in GRC through my internship at Vosyn AI. I bridge the gap between offensive security and compliance — understanding both how systems break and how they should be protected.
+        </p>
+        <p>
+          My goal is to join a professional offensive security team, contribute to real-world engagements, and keep growing as a penetration tester and aspiring red team operator.
+        </p>
+      </div>
+      <div class="about-certs">
+        <h3 style="font-family:var(--head);font-size:1rem;font-weight:700;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;">Certifications</h3>
+        <div class="cert-card">
+          <div class="cert-name">CPTS — Certified Penetration Testing Specialist</div>
+          <div class="cert-issuer">HACK THE BOX</div>
+          <div class="cert-status">Track Completed — Exam Preparation</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">CWES — Certified Web Exploitation Specialist</div>
+          <div class="cert-issuer">HACK THE BOX</div>
+          <div class="cert-status planned">Planned — Post CPTS</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">Hack The Box</div>
+          <div class="cert-issuer">RANK: HACKER</div>
+          <div class="cert-status">Active</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">Mastercard Cybersecurity Virtual Experience</div>
+          <div class="cert-issuer">FORAGE — JAN 2025</div>
+          <div class="cert-status">Completed</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">Tata Cybersecurity Analyst Simulation (IAM)</div>
+          <div class="cert-issuer">FORAGE / TCS — JAN 2025</div>
+          <div class="cert-status">Completed</div>
+        </div>
+      </div>
+    </div>
   </section>
 
+  <!-- EXPERIENCE -->
   <section id="experience">
-    <h2>Professional Experience</h2>
-    <p class="sub-heading">Governance, Risk & Compliance (GRC) Intern – Vosyn (May 2025 – Present)</p>
-    <ul>
-      <li>Assisted in conducting risk assessments and identifying security gaps in alignment with frameworks like ISO27001 and NIST.</li>
-      <li>Contributed to drafting policies and compliance documentation to support regulatory audits.</li>
-      <li>Collaborated with IT and security teams to track risk mitigation efforts and enforce security controls.</li>
-      <li>Participated in third-party risk management by evaluating vendor compliance.</li>
-      <li>Helped maintain incident response procedures, security awareness content, and internal training resources.</li>
-    </ul>
-    <p class="sub-heading">Bug Bounty Hunter – HackerOne & Integriti</p>
-    <ul>
-      <li>Conducted comprehensive vulnerability assessments and penetration tests across various platforms.</li>
-      <li>Discovered high-impact vulnerabilities, including SQL injection, Cross-Site Scripting (XSS), and Remote Code Execution (RCE).</li>
-      <li>Submitted detailed reports that led to prompt security fixes and recognition through reward programs.</li>
-      <li>Collaborated with security teams to improve overall application security.</li>
-      <li>Developed and implemented custom scripts for enhanced testing and reporting efficiency.</li>
-    </ul>
-    <div class="job">
-    <h3>Retention Specialist – CCI Egypt & SHW</h3>
-    <ul>
-        <li>Mastered advanced negotiation and conflict resolution techniques, maintaining high client retention rates.</li>
-        <li>Thrived in fast-paced, high-pressure environments, ensuring professional service delivery under stress.</li>
-        <li>Leveraged strong communication skills and emotional intelligence to navigate complex interpersonal dynamics.</li>
-    </ul>
+    <div class="section-tag">Career</div>
+    <h2 class="section-title">Experience</h2>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">JUN 2025 — PRESENT</div>
+          <div class="exp-company">Vosyn AI</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role">GRC Intern</div>
+          <ul class="exp-bullets">
+            <li>Supported ISO 27001 and NIST alignment initiatives, drafting and maintaining security policies and compliance documentation</li>
+            <li>Conducted vulnerability assessments on WordPress environments and delivered prioritized, actionable remediation recommendations</li>
+            <li>Participated in internal risk assessments and security control evaluations, contributing to reduced organizational risk exposure</li>
+            <li>Assisted in third-party vendor risk management and compliance evaluations</li>
+            <li>Maintained incident response procedures and contributed to internal security awareness content</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">APR 2019 — PRESENT</div>
+          <div class="exp-company">HackerOne / Intigriti</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role">Bug Bounty Hunter</div>
+          <ul class="exp-bullets">
+            <li>Conducted black-box web application penetration tests and identified vulnerabilities including SQLi, XSS, IDOR, SSRF, RCE, and authentication flaws</li>
+            <li>Produced professional vulnerability disclosure reports with PoC steps, CVSS scoring, business impact analysis, and remediation guidance</li>
+            <li>Applied OWASP Top 10 methodology consistently across diverse application stacks</li>
+            <li>Developed custom Python and Bash scripts to enhance testing efficiency and automate reconnaissance workflows</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">PREVIOUS</div>
+          <div class="exp-company">CCI Egypt / SHW</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role">Retention Specialist</div>
+          <ul class="exp-bullets">
+            <li>Developed strong communication, negotiation, and conflict resolution skills in a high-pressure client-facing environment</li>
+            <li>Maintained high client retention rates through professional service delivery and emotional intelligence</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </section>
 
+  <!-- SKILLS -->
   <section id="skills">
-    <h2>Skills & Expertise</h2>
-    <ul>
-      <li><strong>Penetration Testing:</strong> Network, Web Application, Exploitation Techniques</li>
-      <li><strong>Tools & Technologies:</strong> Kali Linux, Nmap, Metasploit, Burp Suite, Nessus, OpenVAS, Wireshark</li>
-      <li><strong>Networking:</strong> TCP/IP, DNS, SSH, FTP, VPN, Firewall Bypass</li>
-      <li><strong>Vulnerability Scanning & Reporting:</strong> Exploit Development, Post-Exploitation, Privilege Escalation</li>
-      <li><strong>Bug Bounty Hunting:</strong> Reconnaissance, Vulnerability Discovery, Reporting</li>
-      <li><strong>Programming & Scripting:</strong> Python, Bash, PowerShell</li>
-      <li><strong>Operating Systems:</strong> Windows, Linux (Ubuntu, Kali)</li>
-    </ul>
-  </section>
+    <div class="section-tag">Technical Arsenal</div>
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid">
 
-  <section id="courses">
-    <h2>Courses & Certifications</h2>
-    <ul>
-      <li>CPTS (Hack The Box) – Certified Penetration Testing Specialist (In Progress)</li> 
-      <li>CWES (Hack The Box) – Certified Web Exploitation Specialist (In Progress)</li> 
-      <li>Various CTF challenges on Hack The Box and TryHackMe platforms</li>
-    </ul>
-  </section>
-  
-  <section id="posts">
-    <h2>My Posts</h2>
-    <ul>
-      <li><a href="information-gathering-web-skill-assessment.html">HTB-Information-Gathering-Web-Edition.</a></li>
-      <li><a href="htb-footprinting-lab-hard.html">A comprehensive write-up detailing the exploitation path from SNMP enumeration to Database access.</a></li>
-      <li><a href="htb-footprinting-lab-medium.html">From an Exposed NFS Share to Database Compromise</a></li>
-      <li><a href="learn-cybersec.html">Learn Cybersecurity</a></li>
-      <li><a href="web-pen-methedology.html">Web Pen Testing Methodology</a></li>
-      <li><a href="cowboyhacker.html">CowBoyHacker-Write-Up(Easy)</a></li>
-      <li><a href="fowsniff.html">FowSniff_CTF-Write-Up(Easy)</a></li>
-    </ul>
-  </section>
+      <div class="skill-card">
+        <div class="skill-cat">Offensive Security</div>
+        <div class="skill-tags">
+          <span class="tag">Penetration Testing</span>
+          <span class="tag">Vulnerability Assessment</span>
+          <span class="tag">Exploit Development</span>
+          <span class="tag">Privilege Escalation</span>
+          <span class="tag">Lateral Movement</span>
+          <span class="tag">Credential Harvesting</span>
+          <span class="tag">Attack Chaining</span>
+          <span class="tag">Social Engineering</span>
+        </div>
+      </div>
 
+      <div class="skill-card">
+        <div class="skill-cat">Web Application Testing</div>
+        <div class="skill-tags">
+          <span class="tag">Burp Suite Pro</span>
+          <span class="tag">OWASP ZAP</span>
+          <span class="tag">SQLMap</span>
+          <span class="tag">Nikto</span>
+          <span class="tag">ffuf</span>
+          <span class="tag">Gobuster</span>
+          <span class="tag">WPScan</span>
+          <span class="tag">Commix</span>
+          <span class="tag">Wfuzz</span>
+          <span class="tag">Dirb</span>
+        </div>
+      </div>
 
-  <section id="projects">
-  <article class="project">
-    <h3>Hack The Box (HTB) — <em>01/2025</em></h3>
-    <p>
-      Engaged actively in the Hack The Box challenges to gain hands-on experience in practical penetration testing.
-      Successfully tackled a variety of active machines on the HTB platform, concentrating on advanced exploitation methods,
-      privilege escalation strategies, and post-exploitation techniques. Achieved the status of a
-      <strong>Ranked Hacker</strong> through consistent problem-solving of complex machines, resulting in the accumulation of valuable points.
-    </p>
-  </article>
+      <div class="skill-card">
+        <div class="skill-cat">Network and Active Directory</div>
+        <div class="skill-tags">
+          <span class="tag">Nmap</span>
+          <span class="tag">Wireshark</span>
+          <span class="tag">Netcat</span>
+          <span class="tag">CrackMapExec</span>
+          <span class="tag">BloodHound</span>
+          <span class="tag">Impacket</span>
+          <span class="tag">Responder</span>
+          <span class="tag">Mimikatz</span>
+          <span class="tag">Evil-WinRM</span>
+          <span class="tag">Enum4linux</span>
+          <span class="tag">rpcclient</span>
+          <span class="tag">smbclient</span>
+        </div>
+      </div>
 
-  <article class="project">
-    <h3>WordPress Risk Assessment – Vosyn Inc. — <em>05/2025</em></h3>
-    <p>
-      Led the design and deployment of a comprehensive risk assessment questionnaire targeting the security posture of Vosyn Inc.'s WordPress environment.
-      Collaborated with the software development team to evaluate update frequency, user account hygiene, plugin and theme sources, file permissions, backup practices, and malware monitoring.
-    </p>
-    <h4><strong>Key Responsibilities:</strong></h4>
-    <ul>
-      <li>Designed and structured a 35+ question Google Form for WordPress security auditing.</li>
-      <li>Assessed core WordPress, theme, and plugin update processes and responsibility assignment.</li>
-      <li>Evaluated authentication mechanisms, including 2FA, password policies, and user account reviews.</li>
-      <li>Analyzed plugin and theme sourcing, risk awareness, and user education practices.</li>
-    </ul>
-  </article>
+      <div class="skill-card">
+        <div class="skill-cat">Exploitation Frameworks</div>
+        <div class="skill-tags">
+          <span class="tag">Metasploit</span>
+          <span class="tag">msfvenom</span>
+          <span class="tag">SearchSploit</span>
+          <span class="tag">Hydra</span>
+          <span class="tag">Medusa</span>
+          <span class="tag">John the Ripper</span>
+          <span class="tag">Hashcat</span>
+          <span class="tag">PowerShell Empire</span>
+        </div>
+      </div>
 
-  <article class="project">
-    <h3>Mastercard Cybersecurity Virtual Experience Program — <em>01/2025</em></h3>
-    <p>
-      Completed a job simulation as an analyst on Mastercard’s Security Awareness Team via Forage.
-    </p>
-    <ul>
-      <li>Identified and reported potential security threats such as phishing attempts.</li>
-      <li>Analyzed business areas for security weaknesses.</li>
-      <li>Implemented targeted cybersecurity training procedures for vulnerable teams.</li>
-    </ul>
-  </article>
+      <div class="skill-card">
+        <div class="skill-cat">Recon and OSINT</div>
+        <div class="skill-tags">
+          <span class="tag">Amass</span>
+          <span class="tag">Subfinder</span>
+          <span class="tag">theHarvester</span>
+          <span class="tag">Shodan</span>
+          <span class="tag">Maltego</span>
+          <span class="tag">DNSrecon</span>
+          <span class="tag">Recon-ng</span>
+          <span class="tag">Fierce</span>
+          <span class="tag">crt.sh</span>
+        </div>
+      </div>
 
-  <article class="project">
-    <h3>Tata Cybersecurity Security Analyst Simulation — <em>01/2025</em></h3>
-    <p>
-      Completed a cybersecurity simulation focused on Identity and Access Management (IAM) with Tata Consultancy Services through Forage.
-    </p>
-    <ul>
-      <li>Collaborated with a cybersecurity consulting team to develop secure IAM strategies.</li>
-      <li>Gained hands-on experience with IAM principles and cybersecurity best practices.</li>
-      <li>Aligned IAM planning with business objectives and risk management.</li>
-      <li>Created detailed documentation and presented technical findings effectively.</li>
-    </ul>
-  </article>
-</section>
+      <div class="skill-card">
+        <div class="skill-cat">Scripting and Frameworks</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Bash</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">OWASP Top 10</span>
+          <span class="tag">MITRE ATT&CK</span>
+          <span class="tag">PTES</span>
+          <span class="tag">NIST SP 800-115</span>
+          <span class="tag">CIS Benchmarks</span>
+          <span class="tag">ISO 27001</span>
+        </div>
+      </div>
 
-
-  <section id="videos">
-    <h2>Cybersecurity Videos</h2>
-    <div>
-      <iframe width="100%" height="500" src="https://www.youtube.com/embed/w6nmgtcfOoo?si=WcZOxCELW-VKI_Gs" 
-        title="YouTube video player" frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen></iframe>
-      <p style="margin-top: 0.5rem;"><strong>Focused on Offensive Security Path</strong></p>
     </div>
   </section>
 
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <p>You can reach me via the following platforms:</p>
-    <ul>
-      <li>Email: <a href="mailto:ahmedmahmou5577@gmail.com">ahmedmahmou5577@gmail.com</a></li>
-      <li>LinkedIn: <a href="https://www.linkedin.com/in/ahmed-mahmoud-4036742bb/" target="_blank" rel="noopener">Ahmed Mahmoud</a></li>
-      <li>GitHub: <a href="https://github.com/svfear" target="_blank" rel="noopener">github.com/svfear</a></li>
-    </ul>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-tag">Work</div>
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-number">01 / HTB</div>
+        <div class="project-title">Hack The Box — CPTS Track</div>
+        <div class="project-date">Completed 2025 &nbsp;•&nbsp; Rank: Hacker</div>
+        <p class="project-desc">
+          Completed the full CPTS track on Hack The Box, hacking around 250 targets across web applications, network environments, and enterprise Active Directory setups. Covered the full attack lifecycle from initial recon through domain compromise. Performed AD attack chains including Kerberoasting, AS-REP Roasting, Pass-the-Hash, DCSync, and Golden Ticket attacks.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">02 / VOSYN</div>
+        <div class="project-title">WordPress Risk Assessment</div>
+        <div class="project-date">May 2025</div>
+        <p class="project-desc">
+          Led design and deployment of a comprehensive security risk assessment for Vosyn's WordPress environment. Built a 35+ question audit covering authentication, plugin sourcing, update practices, file permissions, backup policies, and malware monitoring. Delivered prioritized findings with remediation recommendations aligned to CIS benchmarks.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">03 / METHODOLOGY</div>
+        <div class="project-title">Web Pentest Methodology Framework</div>
+        <div class="project-date">2024</div>
+        <p class="project-desc">
+          Designed a reusable penetration testing methodology covering reconnaissance, enumeration, exploitation, and post-exploitation. Includes tool references, attack templates, OWASP Top 10 techniques, and remediation documentation. Used as the foundation for all personal web application engagements.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">04 / FORAGE</div>
+        <div class="project-title">Mastercard Cybersecurity Simulation</div>
+        <div class="project-date">January 2025</div>
+        <p class="project-desc">
+          Completed a job simulation as an analyst on Mastercard's Security Awareness Team via Forage. Identified phishing threats, analyzed vulnerable business areas, and implemented targeted cybersecurity training procedures for high-risk teams.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">05 / FORAGE</div>
+        <div class="project-title">Tata IAM Security Simulation</div>
+        <div class="project-date">January 2025</div>
+        <p class="project-desc">
+          Completed a cybersecurity simulation focused on Identity and Access Management with Tata Consultancy Services. Developed secure IAM strategies, aligned planning with business risk objectives, and presented technical findings as a consultant deliverable.
+        </p>
+      </div>
+
+    </div>
   </section>
 
+  <!-- POSTS -->
+  <section id="posts">
+    <div class="section-tag">Writing</div>
+    <h2 class="section-title">Posts and Write-Ups</h2>
+    <div class="posts-list">
+      <a href="information-gathering-web-skill-assessment.html" class="post-item">
+        <span class="post-title">HTB — Information Gathering Web Edition</span>
+        <span class="post-arrow">→</span>
+      </a>
+      <a href="htb-footprinting-lab-hard.html" class="post-item">
+        <span class="post-title">HTB Footprinting Lab Hard — SNMP Enumeration to Database Access</span>
+        <span class="post-arrow">→</span>
+      </a>
+      <a href="htb-footprinting-lab-medium.html" class="post-item">
+        <span class="post-title">HTB Footprinting Lab Medium — NFS Share to Database Compromise</span>
+        <span class="post-arrow">→</span>
+      </a>
+      <a href="web-pen-methedology.html" class="post-item">
+        <span class="post-title">Web Penetration Testing Methodology</span>
+        <span class="post-arrow">→</span>
+      </a>
+      <a href="cowboyhacker.html" class="post-item">
+        <span class="post-title">CowBoyHacker Write-Up — Easy</span>
+        <span class="post-arrow">→</span>
+      </a>
+      <a href="fowsniff.html" class="post-item">
+        <span class="post-title">FowSniff CTF Write-Up — Easy</span>
+        <span class="post-arrow">→</span>
+      </a>
+      <a href="learn-cybersec.html" class="post-item">
+        <span class="post-title">Learn Cybersecurity — Getting Started Guide</span>
+        <span class="post-arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- VIDEOS -->
+  <section id="videos">
+    <div class="section-tag">Media</div>
+    <h2 class="section-title">Videos</h2>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/w6nmgtcfOoo?si=WcZOxCELW-VKI_Gs"
+        title="Offensive Security Path"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+      <div class="video-caption">// Offensive Security Career Path — Ahmed Mahmoud</div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-tag">Reach Out</div>
+      <h2 class="section-title">Contact</h2>
+      <p class="contact-desc">
+        I am actively looking for junior penetration tester and cybersecurity internship opportunities. If you are building a security team or have an interesting engagement, I would love to connect.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:ahmedmahmou5577@gmail.com" class="contact-link">
+          <span class="dot"></span> ahmedmahmou5577@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/ahmed-mahmoud-svfear4036742bb" target="_blank" rel="noopener" class="contact-link">
+          <span class="dot"></span> LinkedIn
+        </a>
+        <a href="https://github.com/svfear" target="_blank" rel="noopener" class="contact-link">
+          <span class="dot"></span> GitHub
+        </a>
+        <a href="https://app.hackthebox.com/public/users/168485" target="_blank" rel="noopener" class="contact-link">
+          <span class="dot"></span> Hack The Box
+        </a>
+      </div>
+      <a href="mailto:ahmedmahmou5577@gmail.com" class="btn btn-primary">Send a Message</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; 2025 Ahmed Mahmoud. All rights reserved.</p>
-    <p>
-      <a href="https://www.linkedin.com/in/ahmed-mahmoud-4036742bb/" target="_blank" rel="noopener">LinkedIn</a> |
-      <a href="https://github.com/svfear" target="_blank" rel="noopener">GitHub</a> |
+    <span class="footer-copy">© 2025 Ahmed Mahmoud — Penetration Tester</span>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/ahmed-mahmoud-svfear4036742bb" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/svfear" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://app.hackthebox.com/public/users/168485" target="_blank" rel="noopener">HTB</a>
       <a href="mailto:ahmedmahmou5577@gmail.com">Email</a>
-    </p>
+    </div>
   </footer>
 
 </body>
