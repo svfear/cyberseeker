@@ -521,6 +521,24 @@
       line-height: 1.7;
     }
 
+    .project-link {
+      display: inline-block;
+      margin-top: 1.2rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      color: var(--red-lite);
+      text-decoration: none;
+      border-bottom: 1px solid var(--red-dim);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .project-link:hover {
+      color: var(--white);
+      border-color: var(--red-lite);
+    }
+
     /* ── POSTS ─────────────────────────────────────────────────── */
     #posts { background: var(--bg2); }
 
@@ -768,7 +786,7 @@
       <div class="hero-content">
       <div class="hero-tag">BASED IN ALEXANDRIA, EGYPT</div>
       <h1 class="hero-name">Ahmed<br><span class="red">Mahmoud</span></h1>
-      <p class="hero-title">Junior Penetration Tester &nbsp;|&nbsp; Offensive Security Specialist &nbsp;|&nbsp; Bug Bounty Hunter</p>
+      <p class="hero-title">Offensive Security Engineer Intern @ ExploitUs &nbsp;|&nbsp; Penetration Tester &nbsp;|&nbsp; Bug Hunter</p>
       <p class="hero-desc">
         Offensive security professional focused on web application security, network penetration testing, and Active Directory exploitation. CPTS track completed, exam preparation in progress. Pursuing a career in red team operations.
       </p>
@@ -824,7 +842,7 @@
         <div class="cert-card">
           <div class="cert-name">CWES — Certified Web Exploitation Specialist</div>
           <div class="cert-issuer">HACK THE BOX</div>
-          <div class="cert-status planned">Planned — Post CPTS</div>
+          <div class="cert-status">Path Completed — Exam Preparation</div>
         </div>
         <div class="cert-card">
           <div class="cert-name">Hack The Box</div>
@@ -853,7 +871,22 @@
 
       <div class="exp-item">
         <div class="exp-meta">
-          <div class="exp-date">JUN 2025 — PRESENT</div>
+          <div class="exp-date">2026 — PRESENT</div>
+          <div class="exp-company">ExploitUs</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role">Offensive Security Engineer Intern</div>
+          <ul class="exp-bullets">
+            <li>Conduct active vulnerability research across web and mobile attack surfaces to identify and validate exploitable weaknesses</li>
+            <li>Design and build complex lab specifications for Web and Mobile penetration testing environments used in training and assessment</li>
+            <li>Work within an Agile/Scrum framework, managing sprints and tracking deliverables using Taiga</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">JUN 2025 — SEP 2025</div>
           <div class="exp-company">Vosyn AI</div>
         </div>
         <div class="exp-body">
@@ -880,20 +913,6 @@
             <li>Produced professional vulnerability disclosure reports with PoC steps, CVSS scoring, business impact analysis, and remediation guidance</li>
             <li>Applied OWASP Top 10 methodology consistently across diverse application stacks</li>
             <li>Developed custom Python and Bash scripts to enhance testing efficiency and automate reconnaissance workflows</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-date">PREVIOUS</div>
-          <div class="exp-company">CCI Egypt / SHW</div>
-        </div>
-        <div class="exp-body">
-          <div class="exp-role">Retention Specialist</div>
-          <ul class="exp-bullets">
-            <li>Developed strong communication, negotiation, and conflict resolution skills in a high-pressure client-facing environment</li>
-            <li>Maintained high client retention rates through professional service delivery and emotional intelligence</li>
           </ul>
         </div>
       </div>
@@ -999,6 +1018,37 @@
         </div>
       </div>
 
+      <div class="skill-card">
+        <div class="skill-cat">Mobile Application Security</div>
+        <div class="skill-tags">
+          <span class="tag">Android Pentesting</span>
+          <span class="tag">TCM Security Methodology</span>
+          <span class="tag">MobSF</span>
+          <span class="tag">APK Reverse Engineering</span>
+          <span class="tag">Frida</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">Bug Hunting and Vulnerability Research</div>
+        <div class="skill-tags">
+          <span class="tag">Vulnerability Research</span>
+          <span class="tag">Bug Bounty</span>
+          <span class="tag">CVE Analysis</span>
+          <span class="tag">Exploit Development</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">Agile and Teamwork</div>
+        <div class="skill-tags">
+          <span class="tag">Agile / Scrum</span>
+          <span class="tag">Taiga</span>
+          <span class="tag">Technical Documentation</span>
+          <span class="tag">Cross-Team Collaboration</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1051,6 +1101,16 @@
         <p class="project-desc">
           Completed a cybersecurity simulation focused on Identity and Access Management with Tata Consultancy Services. Developed secure IAM strategies, aligned planning with business risk objectives, and presented technical findings as a consultant deliverable.
         </p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">06 / TOOL</div>
+        <div class="project-title">NetProbe</div>
+        <div class="project-date">Python &nbsp;•&nbsp; Ongoing</div>
+        <p class="project-desc">
+          An async-first, modular port scanner and service fingerprinting tool written in Python, built as a real scan engine rather than a simple connect-and-print script. Supports TCP connect/SYN and UDP scanning, a multi-stage service/version detection pipeline, TLS certificate inspection, adaptive timing templates, and rate limiting, with results exportable to table, JSON, CSV, or HTML.
+        </p>
+        <a href="https://github.com/svfear/NetProbe" target="_blank" rel="noopener" class="project-link">View on GitHub →</a>
       </div>
 
     </div>
